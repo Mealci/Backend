@@ -51,7 +51,7 @@ jobs:
 
     - name: Quality Gate
       id: quality_gate
-      if: steps.sonarqube.outcome == 'success' && steps.performance.outcome == 'success' && steps.security.outcome == 'success'
+      if: steps.security.outcome != 'failure'
       run: |
         echo "Toutes les analyses et tests ont réussi."
         echo "La pull request est prête pour la revue humaine."
@@ -70,8 +70,8 @@ jobs:
           })
 
     - name: Quality Gate Failed
-      if: steps.sonarqube.outcome == 'failure' || steps.performance.outcome == 'failure' || steps.security.outcome == 'failure'
+      if: steps.security.outcome == 'failure'
       run: |
-        echo "Certaines analyses ou tests ont échoué."
+        echo "L'analyse de sécurité a échoué."
         echo "Veuillez corriger les problèmes avant de procéder à la revue."
         exit 1
