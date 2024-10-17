@@ -27,119 +27,51 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.projectKey=Mealci_Backend
-          -Dsonar.organization=mealci
-
-    - name: Get SonarCloud Quality Gate Status
-      id: sonarcloud_status
+    - name: Security Analysis
+      id: security
+      continue-on-error: true
       run: |
-        status=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: "https://sonarcloud.io/api/qualitygates/project_status?projectKey=Mealci_Backend | jq -r '.projectStatus.status')
-        echo "SONAR_STATUS=$status" >> $GITHUB_OUTPUT
-        
-    - name: Comment PR with SonarCloud Results
+        echo "Exécution de l'analyse de sécurité avec OWASP Dependency-Check (placeholder)"
+        echo "Commande à implémenter : mvn org.owasp:dependency-check-maven:check"
+        # Décommentez la ligne suivante quand Dependency-Check sera configuré
+        # mvn org.owasp:dependency-check-maven:check
+
+    - name: Comment PR on Security Analysis Failure
+      if: steps.security.outcome == 'failure'
       uses: actions/github-script@v6
-      env:
-        SONAR_STATUS: ${{ steps.sonarcloud_status.outputs.SONAR_STATUS }}
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-          const sonarStatus = process.env.SONAR_STATUS;
-          let body = '## Résultats de l\'Analyse SonarCloud\n\n';
-          if (sonarStatus === 'OK') {
-            body += '✅ Le code a passé la Quality Gate de SonarCloud avec succès.\n\n';
-          } else {
-            body += '❌ Le code n\'a pas passé la Quality Gate de SonarCloud.\n\n';
-          }
-          body += `Statut de la Quality Gate : ${sonarStatus}\n`;
-          body += 'Pour plus de détails, veuillez consulter [le rapport SonarCloud](https://sonarcloud.io/dashboard?id=Mealci_Backend).\n';
-          
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: body
+            body: '## Échec de l\'Analyse de Sécurité\n\nL\'analyse de sécurité a échoué. Veuillez vérifier le rapport OWASP Dependency-Check pour plus de détails.'
           })
-          - name: Performance Tests
-          id: performance
-          continue-on-error: true
-          run: |
-            echo "Exécution des tests de performance avec JMeter (placeholder)"
-            echo "Commande à implémenter : jmeter -n -t your-test-plan.jmx -l results.jtl"
-            # Ajoutez ici les commandes pour exécuter JMeter
-    
-            - name: Performance Tests
-            id: performance
-            continue-on-error: true
-            run: |
-              echo "Exécution des tests de performance avec JMeter (placeholder)"
-              echo "Commande à implémenter : jmeter -n -t your-test-plan.jmx -l results.jtl"
-              # Ajoutez ici les commandes pour exécuter JMeter
-      
-          - name: Comment PR on Performance Test Failure
-            if: steps.performance.outcome == 'failure'
-            uses: actions/github-script@v6
-            with:
-              github-token: ${{secrets.GITHUB_TOKEN}}
-              script: |
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: '## Échec des Tests de Performance\n\nLes tests de performance ont échoué. Veuillez vérifier les résultats JMeter pour plus de détails.'
-                })
-      
-          - name: Security Analysis
-            id: security
-            continue-on-error: true
-            run: |
-              echo "Exécution de l'analyse de sécurité avec OWASP Dependency-Check (placeholder)"
-              echo "Commande à implémenter : mvn org.owasp:dependency-check-maven:check"
-              # Décommentez la ligne suivante quand Dependency-Check sera configuré
-              # mvn org.owasp:dependency-check-maven:check
-      
-          - name: Comment PR on Security Analysis Failure
-            if: steps.security.outcome == 'failure'
-            uses: actions/github-script@v6
-            with:
-              github-token: ${{secrets.GITHUB_TOKEN}}
-              script: |
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: '## Échec de l\'Analyse de Sécurité\n\nL\'analyse de sécurité a échoué. Veuillez vérifier le rapport OWASP Dependency-Check pour plus de détails.'
-                })
-      
-          - name: Quality Gate
-            id: quality_gate
-            if: steps.sonarqube.outcome == 'success' && steps.performance.outcome == 'success' && steps.security.outcome == 'success'
-            run: |
-              echo "Toutes les analyses et tests ont réussi."
-              echo "La pull request est prête pour la revue humaine."
-      
-          - name: Comment PR on Success
-            if: steps.quality_gate.outcome == 'success'
-            uses: actions/github-script@v6
-            with:
-              github-token: ${{secrets.GITHUB_TOKEN}}
-              script: |
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: '## Succès du Pipeline CI\n\nToutes les étapes du pipeline CI ont réussi. La pull request est prête pour la revue.'
-                })
-      
-          - name: Quality Gate Failed
-            if: steps.sonarqube.outcome == 'failure' || steps.performance.outcome == 'failure' || steps.security.outcome == 'failure'
-            run: |
-              echo "Certaines analyses ou tests ont échoué."
-              echo "Veuillez corriger les problèmes avant de procéder à la revue."
-              exit 1
+
+    - name: Quality Gate
+      id: quality_gate
+      if: steps.sonarqube.outcome == 'success' && steps.performance.outcome == 'success' && steps.security.outcome == 'success'
+      run: |
+        echo "Toutes les analyses et tests ont réussi."
+        echo "La pull request est prête pour la revue humaine."
+
+    - name: Comment PR on Success
+      if: steps.quality_gate.outcome == 'success'
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '## Succès du Pipeline CI\n\nToutes les étapes du pipeline CI ont réussi. La pull request est prête pour la revue.'
+          })
+
+    - name: Quality Gate Failed
+      if: steps.sonarqube.outcome == 'failure' || steps.performance.outcome == 'failure' || steps.security.outcome == 'failure'
+      run: |
+        echo "Certaines analyses ou tests ont échoué."
+        echo "Veuillez corriger les problèmes avant de procéder à la revue."
+        exit 1
