@@ -32,6 +32,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=Mealci_Backend
+          -Dsonar.organization=mealci
 
     - name: Get SonarCloud Quality Gate Status
       id: sonarcloud_status
