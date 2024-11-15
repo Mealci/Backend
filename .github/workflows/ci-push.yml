@@ -1,0 +1,51 @@
+name: CI - Push
+
+on:
+  push:
+    branches-ignore:
+      - 'main'
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11' #TODO ajuster la version de Java
+        distribution: 'adopt'
+
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Run Unit Tests
+      run: |
+        echo "Exécution des tests unitaires (placeholder)"
+        echo "Commande à implémenter : mvn test"
+        # mvn test
+
+    - name: Run Integration Tests
+      run: |
+        echo "Exécution des tests d'intégration (placeholder)"
+        echo "Commande à implémenter : mvn verify -DskipUnitTests"
+        # mvn verify -DskipUnitTests
+
+    - name: Quality Gate
+      if: ${{ success() }}
+      run: |
+        echo "Simulation : Tous les tests ont réussi. La porte de qualité est passée."
+        echo "Le code est prêt pour une demande de fusion."
+
+    - name: Quality Gate Failed
+      if: ${{ failure() }}
+      run: |
+        echo "Simulation : Certains tests ont échoué. La porte de qualité n'est pas passée."
+        echo "Veuillez corriger les problèmes et relancer les tests."

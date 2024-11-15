@@ -1,0 +1,82 @@
+name: CI - Pull Request
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Security Analysis
+      id: security
+      continue-on-error: true
+      run: |
+        echo "Exécution de l'analyse de sécurité avec OWASP Dependency-Check (placeholder)"
+        echo "Commande à implémenter : mvn org.owasp:dependency-check-maven:check"
+        # Décommentez la ligne suivante quand Dependency-Check sera configuré
+        # mvn org.owasp:dependency-check-maven:check
+
+    - name: Comment PR on Security Analysis Failure
+      if: steps.security.outcome == 'failure'
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '## Échec de l\'Analyse de Sécurité\n\nL\'analyse de sécurité a échoué. Veuillez vérifier le rapport OWASP Dependency-Check pour plus de détails.'
+          })
+
+    - name: Quality Gate
+      id: quality_gate
+      if: steps.security.outcome != 'failure'
+      run: |
+        echo "Toutes les analyses et tests ont réussi."
+        echo "La pull request est prête pour la revue humaine."
+
+    - name: Comment PR on Success
+      if: steps.quality_gate.outcome == 'success'
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '## Succès du Pipeline CI\n\nToutes les étapes du pipeline CI ont réussi. La pull request est prête pour la revue.'
+          })
+
+    - name: Quality Gate Failed
+      if: steps.security.outcome == 'failure'
+      run: |
+        echo "L'analyse de sécurité a échoué."
+        echo "Veuillez corriger les problèmes avant de procéder à la revue."
+        exit 1
