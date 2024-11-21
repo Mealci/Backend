@@ -1,4 +1,4 @@
-package com.mealci.tests.core.base.entities;
+package com.mealci.core.base.entities;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.mealci.tests.core.base.entities;
+package com.mealci.core.base.entities;
 
 import com.mealci.core.base.Entity;
 import lombok.Getter;

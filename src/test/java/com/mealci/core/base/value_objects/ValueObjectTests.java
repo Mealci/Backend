@@ -1,4 +1,4 @@
-package com.mealci.tests.core.base.value_objects;
+package com.mealci.core.base.value_objects;
 
 import org.junit.Assert;
 import org.junit.Test;
