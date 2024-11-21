@@ -13,7 +13,7 @@ public class PasswordServiceImpl implements PasswordService {
                 && password.length() >= 8
                 && Pattern.compile("[A-Z]").matcher(password).find()
                 && Pattern.compile("[a-z]").matcher(password).find()
-                && Pattern.compile("[0-9]").matcher(password).find()
+                && Pattern.compile("\\d").matcher(password).find()
                 && Pattern.compile("[!@#$%^&*(),.?\":{}|<>]").matcher(password).find();
     }
 
