@@ -5,6 +5,12 @@ import com.mealci.core.user_role.UserRole;
 import com.mealci.core.users.User;
 
 public class UserProfile {
+
+    private UserProfile() {
+        throw new IllegalStateException("Utility class");
+    }
+
+
     public static UserEntity toEntity(User user) {
         if (user == null) {
             return null;
@@ -15,7 +21,7 @@ public class UserProfile {
         entity.setLastName(user.lastName);
         entity.setEmail(user.email.address);
         entity.setPassword(user.password);
-        entity.setRole(user.role.ordinal());
+        entity.setRole(user.role.getValue());
         entity.setAge(user.age);
 
         return entity;
