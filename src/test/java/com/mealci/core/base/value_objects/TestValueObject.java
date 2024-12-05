@@ -1,4 +1,4 @@
-package com.mealci.tests.core.base.value_objects;
+package com.mealci.core.base.value_objects;
 
 import com.mealci.core.base.ValueObject;
 import lombok.Getter;
