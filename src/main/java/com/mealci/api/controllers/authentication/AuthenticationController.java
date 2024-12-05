@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class AuthenticationController {
     private final RegisterService registerService;
 
@@ -18,7 +18,7 @@ public class AuthenticationController {
         this.registerService = registerService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         try {
             var result = registerService.register(registerRequest);
