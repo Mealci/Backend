@@ -20,6 +20,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/").permitAll();
                     auth.requestMatchers("/register").permitAll();
+                    auth.requestMatchers("/login").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .oauth2Login(withDefaults());
