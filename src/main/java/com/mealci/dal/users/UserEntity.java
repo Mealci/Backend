@@ -1,8 +1,12 @@
 package com.mealci.dal.users;
 
+import com.mealci.dal.poop.PoopMonitoringEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,4 +22,6 @@ public class UserEntity {
     public String password;
     public int role;
     public int age;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PoopMonitoringEntity> orders = new ArrayList<>();
 }

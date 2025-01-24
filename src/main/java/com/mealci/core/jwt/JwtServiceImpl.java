@@ -4,6 +4,7 @@ import com.mealci.core.users.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,13 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    private final HttpServletRequest request;
+
     private static final long EXPIRATION_TIME = 3600000;
+
+    public JwtServiceImpl(HttpServletRequest request) {
+        this.request = request;
+    }
 
     @Override
     public String generateToken(User user) {
@@ -53,6 +60,10 @@ public class JwtServiceImpl implements JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractEmail() {
+        return getClaim(getToken(), "email", String.class);
+    }
+
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
@@ -64,5 +75,14 @@ public class JwtServiceImpl implements JwtService {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    private <T> T getClaim(String token, String claimKey, Class<T> claimType) {
+        Claims claims = extractAllClaims(token);
+        return claims.get(claimKey, claimType);
+    }
+
+    public String getToken() {
+        return (String) request.getAttribute("jwt");
     }
 }
