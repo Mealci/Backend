@@ -18,6 +18,7 @@ public class AuthorizeRequests {
         authorize
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/denied")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/auth/**")).permitAll()
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/health/**")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("**/oauth2/**")).permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
     }
