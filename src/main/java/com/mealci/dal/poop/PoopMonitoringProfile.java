@@ -1,5 +1,6 @@
 package com.mealci.dal.poop;
 
+import com.mealci.core.additional_asspects.AdditionalAsspect;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.stool_composition.StoolComposition;
 import com.mealci.core.users.User;
@@ -25,10 +26,21 @@ public class PoopMonitoringProfile {
             return null;
         }
 
+        var additionalAsspect = AdditionalAsspect.create(entity.HasExcessiveFlatulence,
+                entity.HasPain,
+                entity.HasAbdominalBloating,
+                entity.HasMucus,
+                entity.HasFoodResidue,
+                entity.HasColic,
+                entity.HasUnusualSmells);
+
         return PoopMonitoring.create(
-                entity.getCreatedAt(),
-                StoolComposition.fromValue(entity.getStoolComposition()),
-                entity.getPoopingNumber(),
+                entity.createdAt,
+                StoolComposition.fromValue(entity.stoolComposition),
+                entity.quantity,
+                entity.feeling,
+                additionalAsspect,
+                entity.poopingNumber,
                 entity.getUser().id
         );
     }

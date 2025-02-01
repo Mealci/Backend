@@ -1,16 +1,15 @@
 package com.mealci.core.poop_monitoring;
 
+import com.mealci.core.additional_asspects.AdditionalAsspect;
 import com.mealci.core.jwt.JwtService;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
 import com.mealci.core.results.Result;
-import com.mealci.core.stool_composition.StoolComposition;
 import com.mealci.core.users.UserService;
 import com.mealci.dal.poop.PoopMonitoringRepository;
 import com.mealci.dal.users.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.util.Date;
 import java.util.List;
 
 
@@ -23,7 +22,8 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
 
     public PoopMonitoringServiceImpl(UserService userService,
                                      PoopMonitoringRepository poopMonitoringRepository,
-                                     JwtService jwtService, UserRepository userRepository){
+                                     JwtService jwtService,
+                                     UserRepository userRepository) {
         this.userService = userService;
         this.poopMonitoringRepository = poopMonitoringRepository;
         this.jwtService = jwtService;
@@ -37,9 +37,25 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
             return Result.failure(id.getErrorCode());
         }
 
-        var today = getCurrentDate();
-        var poopingNumber = poopMonitoringRepository.countPoopingNumber(id.getData(), today);
-        var poopMonitoring = PoopMonitoring.create(today, , poopingNumber, id.getData());
+        var poopingNumber = poopMonitoringRepository.countPoopingNumber(id.getData(), Instant.now());
+        var additionalAspect = AdditionalAsspect.create(
+                request.HasExcessiveFlatulence(),
+                request.HasPain(),
+                request.HasAbdominalBloating(),
+                request.HasMucus(),
+                request.HasFoodResidue(),
+                request.HasColic(),
+                request.HasUnusualSmells()
+        );
+
+        var poopMonitoring = PoopMonitoring.create(Instant.now(),
+                request.stoolComposition(),
+                request.quantity(),
+                request.feeling(),
+                additionalAspect,
+                poopingNumber,
+                id.getData());
+
         var email = jwtService.extractEmail();
         var user = userRepository.findByEmailEntity(email);
         if (user.isEmpty()) {
@@ -60,12 +76,5 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
     @Override
     public List<PoopMonitoring> getByUserId(int id) {
         return List.of();
-    }
-
-    private Date getCurrentDate() {
-        var localDate = LocalDate.now();
-        var localDateTime = localDate.atStartOfDay();
-
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

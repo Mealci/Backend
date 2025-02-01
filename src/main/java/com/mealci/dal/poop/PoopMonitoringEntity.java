@@ -1,12 +1,12 @@
 package com.mealci.dal.poop;
 
-import com.mealci.core.stool_composition.StoolComposition;
+import com.mealci.core.feeling.Feeling;
 import com.mealci.dal.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -16,8 +16,17 @@ public class PoopMonitoringEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
-    public Date createdAt;
+    public Instant createdAt;
     public int stoolComposition;
+    public int quantity;
+    public Feeling feeling;
+    public boolean HasExcessiveFlatulence;
+    public boolean HasPain;
+    public boolean HasAbdominalBloating;
+    public boolean HasMucus;
+    public boolean HasFoodResidue;
+    public boolean HasColic;
+    public boolean HasUnusualSmells;
     public int poopingNumber;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

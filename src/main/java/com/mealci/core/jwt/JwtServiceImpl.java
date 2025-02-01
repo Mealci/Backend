@@ -6,10 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -29,39 +27,39 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateToken(User user) {
-        // Convert the secret string into a SecretKey
-        SecretKey secretKey = Keys.hmacShaKeyFor(this.secretKey.getBytes());
+        var key = Keys.hmacShaKeyFor(this.secretKey.getBytes());
 
         return Jwts.builder()
                 .claim("firstName", user.firstName)
                 .claim("lastName", user.lastName)
-                .claim("email", user.email)
+                .claim("email", user.email.address)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(secretKey)
+                .signWith(key)
                 .compact();
     }
 
     private Claims extractAllClaims(String token) {
+        var key = Keys.hmacShaKeyFor(this.secretKey.getBytes());
+
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
 
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-    }
-
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public boolean isTokenValid(String token) {
+        return !isTokenExpired(token);
     }
 
     public String extractEmail() {
         return getClaim(getToken(), "email", String.class);
+    }
+
+    public String extractEmail(String jwt) {
+        return extractAllClaims(jwt).get("email", String.class);
     }
 
     public Date extractExpiration(String token) {

@@ -4,10 +4,14 @@ import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 public interface PoopMonitoringRepository extends JpaRepository<PoopMonitoringEntity, Long> {
+
+    List<PoopMonitoringEntity> findByUser_IdAndCreatedAt(
+            int id,
+            Instant startOfDay);
 
     default PoopMonitoring create(PoopMonitoring poopMonitoring, User user) {
         var entity = PoopMonitoringProfile.toEntity(poopMonitoring, user);
@@ -16,12 +20,8 @@ public interface PoopMonitoringRepository extends JpaRepository<PoopMonitoringEn
         return PoopMonitoringProfile.toDomain(result);
     }
 
-    List<PoopMonitoringEntity> findByUser_IdAndCreatedAt(
-            int id,
-            Date startOfDay);
-
-    default int countPoopingNumber(int id, Date date){
-        return findByUser_IdAndCreatedAt(id, date).size();
+    default int countPoopingNumber(int id, Instant now){
+        return findByUser_IdAndCreatedAt(id, now).size();
     }
 
     default void save(PoopMonitoring poopMonitoring, User user) {

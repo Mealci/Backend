@@ -4,7 +4,6 @@ import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.poop_monitoring.PoopMonitoringService;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
 import com.mealci.core.results.Result;
-import com.mealci.core.stool_composition.StoolComposition;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +20,7 @@ public class PoopMonitoringController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Result<PoopMonitoring>> cerate(@RequestBody CreatePoopMonitoringRequest request) {
+    public ResponseEntity<Result<PoopMonitoring>> create(@RequestBody CreatePoopMonitoringRequest request) {
         var result = poopMonitoringService.create(request);
         if (!result.isSuccess()) {
             return ResponseEntity.badRequest().body(result);
