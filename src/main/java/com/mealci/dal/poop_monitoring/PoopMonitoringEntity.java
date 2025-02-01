@@ -1,6 +1,5 @@
-package com.mealci.dal.poop;
+package com.mealci.dal.poop_monitoring;
 
-import com.mealci.core.feeling.Feeling;
 import com.mealci.dal.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class PoopMonitoringEntity {
     public Instant createdAt;
     public int stoolComposition;
     public int quantity;
-    public Feeling feeling;
+    public int feeling;
     public boolean HasExcessiveFlatulence;
     public boolean HasPain;
     public boolean HasAbdominalBloating;

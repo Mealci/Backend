@@ -1,6 +1,6 @@
 package com.mealci.dal.users;
 
-import com.mealci.dal.poop.PoopMonitoringEntity;
+import com.mealci.dal.poop_monitoring.PoopMonitoringEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

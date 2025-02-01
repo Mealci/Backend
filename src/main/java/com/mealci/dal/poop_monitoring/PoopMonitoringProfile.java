@@ -1,13 +1,12 @@
-package com.mealci.dal.poop;
+package com.mealci.dal.poop_monitoring;
 
 import com.mealci.core.additional_asspects.AdditionalAsspect;
+import com.mealci.core.feeling.Feeling;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.stool_composition.StoolComposition;
-import com.mealci.core.users.User;
-import com.mealci.dal.users.UserProfile;
 
 public class PoopMonitoringProfile {
-    public static PoopMonitoringEntity toEntity(PoopMonitoring poopMonitoring, User user) {
+    public static PoopMonitoringEntity toEntity(PoopMonitoring poopMonitoring) {
         if (poopMonitoring == null) {
             return null;
         }
@@ -15,8 +14,16 @@ public class PoopMonitoringProfile {
         var entity = new PoopMonitoringEntity();
         entity.setCreatedAt(poopMonitoring.createdAt);
         entity.setStoolComposition(poopMonitoring.stoolComposition.getValue());
+        entity.setQuantity(poopMonitoring.getQuantity());
+        entity.setFeeling(poopMonitoring.getFeeling().getValue());
+        entity.setHasExcessiveFlatulence(poopMonitoring.additionalAsspect.HasExcessiveFlatulence);
+        entity.setHasPain(poopMonitoring.additionalAsspect.HasPain);
+        entity.setHasAbdominalBloating(poopMonitoring.additionalAsspect.HasAbdominalBloating);
+        entity.setHasMucus(poopMonitoring.additionalAsspect.HasMucus);
+        entity.setHasFoodResidue(poopMonitoring.additionalAsspect.HasFoodResidue);
+        entity.setHasColic(poopMonitoring.additionalAsspect.HasColic);
+        entity.setHasUnusualSmells(poopMonitoring.additionalAsspect.HasUnusualSmells);
         entity.setPoopingNumber(poopMonitoring.poopingNumber);
-        entity.setUser(UserProfile.toEntity(user));
 
         return entity;
     }
@@ -38,10 +45,8 @@ public class PoopMonitoringProfile {
                 entity.createdAt,
                 StoolComposition.fromValue(entity.stoolComposition),
                 entity.quantity,
-                entity.feeling,
+                Feeling.fromValue(entity.feeling),
                 additionalAsspect,
-                entity.poopingNumber,
-                entity.getUser().id
-        );
+                entity.poopingNumber);
     }
 }

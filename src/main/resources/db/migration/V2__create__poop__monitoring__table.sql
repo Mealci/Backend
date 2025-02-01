@@ -4,7 +4,7 @@ CREATE TABLE poop_monitoring
     created_at               TIMESTAMP WITHOUT TIME ZONE,
     stool_composition        INTEGER                                  NOT NULL,
     quantity                 INTEGER                                  NOT NULL,
-    feeling                  SMALLINT,
+    feeling                  INTEGER                                  NOT NULL,
     has_excessive_flatulence BOOLEAN                                  NOT NULL,
     has_pain                 BOOLEAN                                  NOT NULL,
     has_abdominal_bloating   BOOLEAN                                  NOT NULL,

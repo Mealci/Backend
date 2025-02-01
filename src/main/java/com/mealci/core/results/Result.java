@@ -8,12 +8,12 @@ import lombok.Setter;
 public class Result<T> {
     @Getter
     private boolean success;
-    private T data;
+    private T value;
     private String errorCode;
 
     public Result(boolean success, T data, String errorCode) {
         this.success = success;
-        this.data = data;
+        this.value = data;
         this.errorCode = errorCode;
     }
 

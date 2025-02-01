@@ -21,9 +21,9 @@ public enum StoolComposition {
     }
 
     public static StoolComposition fromValue(int value) {
-        for (StoolComposition role : StoolComposition.values()) {
-            if (role.getValue() == value) {
-                return role;
+        for (StoolComposition stoolComposition : StoolComposition.values()) {
+            if (stoolComposition.getValue() == value) {
+                return stoolComposition;
             }
         }
         throw new IllegalArgumentException("Unexpected value: " + value);

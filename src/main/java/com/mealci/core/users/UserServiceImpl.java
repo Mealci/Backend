@@ -19,9 +19,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result<Integer> getUserId() {
         var email = jwtService.extractEmail();
-        var id = userRepository.findIdByEmail(email);
-
-        return id.map(Result::success)
+        try {
+            var id = userRepository.findIdByEmail(email);
+            return id.map(Result::success)
                 .orElseGet(() -> Result.failure("User not found"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

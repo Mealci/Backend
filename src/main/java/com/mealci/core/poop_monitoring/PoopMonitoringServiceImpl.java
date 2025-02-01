@@ -4,8 +4,7 @@ import com.mealci.core.additional_asspects.AdditionalAsspect;
 import com.mealci.core.jwt.JwtService;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
 import com.mealci.core.results.Result;
-import com.mealci.core.users.UserService;
-import com.mealci.dal.poop.PoopMonitoringRepository;
+import com.mealci.dal.poop_monitoring.repositories.CustomPoopMonitoringRepository;
 import com.mealci.dal.users.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,29 +14,26 @@ import java.util.List;
 
 @Service
 public class PoopMonitoringServiceImpl implements PoopMonitoringService{
-    private final UserService userService;
-    private final PoopMonitoringRepository poopMonitoringRepository;
+    private final CustomPoopMonitoringRepository customPoopMonitoringRepository;
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    public PoopMonitoringServiceImpl(UserService userService,
-                                     PoopMonitoringRepository poopMonitoringRepository,
+    public PoopMonitoringServiceImpl(CustomPoopMonitoringRepository customPoopMonitoringRepository,
                                      JwtService jwtService,
                                      UserRepository userRepository) {
-        this.userService = userService;
-        this.poopMonitoringRepository = poopMonitoringRepository;
+        this.customPoopMonitoringRepository = customPoopMonitoringRepository;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
     }
 
     @Override
     public Result<PoopMonitoring> create(CreatePoopMonitoringRequest request) {
-        var id = userService.getUserId();
-        if (!id.isSuccess()) {
-            return Result.failure(id.getErrorCode());
+        var email = jwtService.extractEmail();
+        var poopingNumber = customPoopMonitoringRepository.countTodayPoopingNumber(email, Instant.now());
+        if (!poopingNumber.isSuccess()) {
+            return Result.failure(poopingNumber.getErrorCode());
         }
 
-        var poopingNumber = poopMonitoringRepository.countPoopingNumber(id.getData(), Instant.now());
         var additionalAspect = AdditionalAsspect.create(
                 request.HasExcessiveFlatulence(),
                 request.HasPain(),
@@ -53,17 +49,17 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
                 request.quantity(),
                 request.feeling(),
                 additionalAspect,
-                poopingNumber,
-                id.getData());
+                poopingNumber.getValue());
 
-        var email = jwtService.extractEmail();
         var user = userRepository.findByEmailEntity(email);
         if (user.isEmpty()) {
-            return Result.failure("Invalid email");
+            return Result.failure("Can't find user with this email");
         }
 
-        var result = poopMonitoringRepository.create(poopMonitoring, user.get());
-        poopMonitoringRepository.save(result, user.get());
+        var result = customPoopMonitoringRepository.create(poopMonitoring, user.get().email.address);
+        if (!result.isSuccess()) {
+            return Result.failure(result.getErrorCode());
+        }
 
         return Result.success(poopMonitoring);
     }

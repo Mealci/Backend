@@ -15,22 +15,19 @@ public class PoopMonitoring {
     public Feeling feeling;
     public AdditionalAsspect additionalAsspect;
     public int poopingNumber;
-    public int userId;
 
     private PoopMonitoring(Instant ceratedAt,
                            StoolComposition stoolComposition,
                            int quantity,
                            Feeling feeling,
                            AdditionalAsspect additionalAsspect,
-                           int poopingNumber,
-                           int userId) {
+                           int poopingNumber) {
         this.createdAt = ceratedAt;
         this.stoolComposition = stoolComposition;
         this.quantity = quantity;
         this.feeling = feeling;
         this.additionalAsspect = additionalAsspect;
         this.poopingNumber = poopingNumber;
-        this.userId = userId;
     }
 
     public static PoopMonitoring create(Instant createdAt,
@@ -38,15 +35,13 @@ public class PoopMonitoring {
                                         int quantity,
                                         Feeling feeling,
                                         AdditionalAsspect additionalAsspect,
-                                        int poopingNumber,
-                                        int userId)
+                                        int poopingNumber)
     {
         return new PoopMonitoring(createdAt,
                 stoolComposition,
                 quantity,
                 feeling,
                 additionalAsspect,
-                poopingNumber,
-                userId);
+                poopingNumber);
     }
 }
