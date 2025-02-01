@@ -12,7 +12,6 @@ CREATE TABLE poop_monitoring
     has_food_residue         BOOLEAN                                  NOT NULL,
     has_colic                BOOLEAN                                  NOT NULL,
     has_unusual_smells       BOOLEAN                                  NOT NULL,
-    pooping_number           INTEGER                                  NOT NULL,
     user_id                  INTEGER                                  NOT NULL,
     CONSTRAINT pk_poop_monitoring PRIMARY KEY (id)
 );

@@ -26,7 +26,6 @@ public class PoopMonitoringEntity {
     public boolean hasFoodResidue;
     public boolean hasColic;
     public boolean hasUnusualSmells;
-    public int poopingNumber;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public UserEntity user;
@@ -41,8 +40,7 @@ public class PoopMonitoringEntity {
                                 boolean hasMucus,
                                 boolean hasFoodResidue,
                                 boolean hasColic,
-                                boolean hasUnusualSmells,
-                                int poopingNumber) {
+                                boolean hasUnusualSmells) {
         this.createdAt = createdAt;
         this.stoolComposition = stoolComposition;
         this.quantity = quantity;
@@ -54,7 +52,6 @@ public class PoopMonitoringEntity {
         this.hasFoodResidue = hasFoodResidue;
         this.hasColic = hasColic;
         this.hasUnusualSmells = hasUnusualSmells;
-        this.poopingNumber = poopingNumber;
     }
 
     public PoopMonitoringEntity() {}

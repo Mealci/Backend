@@ -6,8 +6,6 @@ import com.mealci.dal.poop_monitoring.PoopMonitoringProfile;
 import com.mealci.dal.users.UserRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
-
 @Repository
 public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringRepository {
     private final PoopMonitoringRepository poopMonitoringRepository;
@@ -17,16 +15,6 @@ public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringR
                                               UserRepository userRepository) {
         this.poopMonitoringRepository = poopMonitoringRepository;
         this.userRepository = userRepository;
-    }
-
-    public Result<Integer> countTodayPoopingNumber(String email, Instant now) {
-        var user = userRepository.findByEmail(email);
-        if (user.isEmpty()) {
-            return Result.failure("User not found");
-        }
-
-        var poopMonitorings = poopMonitoringRepository.findByUserIdAndCreatedAtBetween(user.get().id, now, now);
-        return Result.success(poopMonitorings.size());
     }
 
     public Result<PoopMonitoring> create(PoopMonitoring poopMonitoring, String email) {

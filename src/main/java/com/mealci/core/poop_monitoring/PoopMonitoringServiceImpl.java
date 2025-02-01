@@ -29,11 +29,6 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
     @Override
     public Result<PoopMonitoring> create(CreatePoopMonitoringRequest request) {
         var email = jwtService.extractEmail();
-        var poopingNumber = customPoopMonitoringRepository.countTodayPoopingNumber(email, Instant.now());
-        if (!poopingNumber.isSuccess()) {
-            return Result.failure(poopingNumber.getErrorCode());
-        }
-
         var additionalAspect = AdditionalAsspect.create(
                 request.HasExcessiveFlatulence(),
                 request.HasPain(),
@@ -48,8 +43,7 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
                 request.stoolComposition(),
                 request.quantity(),
                 request.feeling(),
-                additionalAspect,
-                poopingNumber.getValue());
+                additionalAspect);
 
         var user = userRepository.findByEmailEntity(email);
         if (user.isEmpty()) {

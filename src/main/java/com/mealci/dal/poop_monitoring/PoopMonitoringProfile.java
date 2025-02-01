@@ -24,8 +24,7 @@ public class PoopMonitoringProfile {
                 poopMonitoring.additionalAsspect.hasMucus,
                 poopMonitoring.additionalAsspect.hasFoodResidue,
                 poopMonitoring.additionalAsspect.hasColic,
-                poopMonitoring.additionalAsspect.hasUnusualSmells,
-                poopMonitoring.poopingNumber);
+                poopMonitoring.additionalAsspect.hasUnusualSmells);
     }
 
     public static PoopMonitoring toDomain(PoopMonitoringEntity entity) {
@@ -46,7 +45,6 @@ public class PoopMonitoringProfile {
                 StoolComposition.fromValue(entity.stoolComposition),
                 entity.quantity,
                 Feeling.fromValue(entity.feeling),
-                additionalAsspect,
-                entity.poopingNumber);
+                additionalAsspect);
     }
 }

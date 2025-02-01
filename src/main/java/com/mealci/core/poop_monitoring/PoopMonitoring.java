@@ -14,34 +14,29 @@ public class PoopMonitoring {
     public final int quantity;
     public final Feeling feeling;
     public final AdditionalAsspect additionalAsspect;
-    public final int poopingNumber;
 
     private PoopMonitoring(Instant ceratedAt,
                            StoolComposition stoolComposition,
                            int quantity,
                            Feeling feeling,
-                           AdditionalAsspect additionalAsspect,
-                           int poopingNumber) {
+                           AdditionalAsspect additionalAsspect) {
         this.createdAt = ceratedAt;
         this.stoolComposition = stoolComposition;
         this.quantity = quantity;
         this.feeling = feeling;
         this.additionalAsspect = additionalAsspect;
-        this.poopingNumber = poopingNumber;
     }
 
     public static PoopMonitoring create(Instant createdAt,
                                         StoolComposition stoolComposition,
                                         int quantity,
                                         Feeling feeling,
-                                        AdditionalAsspect additionalAsspect,
-                                        int poopingNumber)
+                                        AdditionalAsspect additionalAsspect)
     {
         return new PoopMonitoring(createdAt,
                 stoolComposition,
                 quantity,
                 feeling,
-                additionalAsspect,
-                poopingNumber);
+                additionalAsspect);
     }
 }
