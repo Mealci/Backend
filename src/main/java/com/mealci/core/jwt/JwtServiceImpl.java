@@ -14,6 +14,7 @@ import java.util.function.Function;
 @Service
 public class JwtServiceImpl implements JwtService {
 
+    public static final String EMAIL = "email";
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -32,7 +33,7 @@ public class JwtServiceImpl implements JwtService {
         return Jwts.builder()
                 .claim("firstName", user.firstName)
                 .claim("lastName", user.lastName)
-                .claim("email", user.email.address)
+                .claim(EMAIL, user.email.address)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
@@ -55,11 +56,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     public String extractEmail() {
-        return getClaim(getToken(), "email", String.class);
+        return getClaim(getToken(), EMAIL, String.class);
     }
 
     public String extractEmail(String jwt) {
-        return extractAllClaims(jwt).get("email", String.class);
+        return extractAllClaims(jwt).get(EMAIL, String.class);
     }
 
     public Date extractExpiration(String token) {
@@ -71,7 +72,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private boolean hasEmail(String token) {
-        return getClaim(token, "email", String.class) != null;
+        return getClaim(token, EMAIL, String.class) != null;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

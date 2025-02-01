@@ -2,7 +2,6 @@ package com.mealci.core.poop_monitoring;
 
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
 import com.mealci.core.results.Result;
-import com.mealci.core.stool_composition.StoolComposition;
 
 import java.util.List;
 

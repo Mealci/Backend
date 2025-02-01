@@ -16,13 +16,13 @@ public class PoopMonitoringProfile {
         entity.setStoolComposition(poopMonitoring.stoolComposition.getValue());
         entity.setQuantity(poopMonitoring.getQuantity());
         entity.setFeeling(poopMonitoring.getFeeling().getValue());
-        entity.setHasExcessiveFlatulence(poopMonitoring.additionalAsspect.HasExcessiveFlatulence);
-        entity.setHasPain(poopMonitoring.additionalAsspect.HasPain);
-        entity.setHasAbdominalBloating(poopMonitoring.additionalAsspect.HasAbdominalBloating);
-        entity.setHasMucus(poopMonitoring.additionalAsspect.HasMucus);
-        entity.setHasFoodResidue(poopMonitoring.additionalAsspect.HasFoodResidue);
-        entity.setHasColic(poopMonitoring.additionalAsspect.HasColic);
-        entity.setHasUnusualSmells(poopMonitoring.additionalAsspect.HasUnusualSmells);
+        entity.setHasExcessiveFlatulence(poopMonitoring.additionalAsspect.hasExcessiveFlatulence);
+        entity.setHasPain(poopMonitoring.additionalAsspect.hasPain);
+        entity.setHasAbdominalBloating(poopMonitoring.additionalAsspect.hasAbdominalBloating);
+        entity.setHasMucus(poopMonitoring.additionalAsspect.hasMucus);
+        entity.setHasFoodResidue(poopMonitoring.additionalAsspect.hasFoodResidue);
+        entity.setHasColic(poopMonitoring.additionalAsspect.hasColic);
+        entity.setHasUnusualSmells(poopMonitoring.additionalAsspect.hasUnusualSmells);
         entity.setPoopingNumber(poopMonitoring.poopingNumber);
 
         return entity;
@@ -33,13 +33,13 @@ public class PoopMonitoringProfile {
             return null;
         }
 
-        var additionalAsspect = AdditionalAsspect.create(entity.HasExcessiveFlatulence,
-                entity.HasPain,
-                entity.HasAbdominalBloating,
-                entity.HasMucus,
-                entity.HasFoodResidue,
-                entity.HasColic,
-                entity.HasUnusualSmells);
+        var additionalAsspect = AdditionalAsspect.create(entity.hasExcessiveFlatulence,
+                entity.hasPain,
+                entity.hasAbdominalBloating,
+                entity.hasMucus,
+                entity.hasFoodResidue,
+                entity.hasColic,
+                entity.hasUnusualSmells);
 
         return PoopMonitoring.create(
                 entity.createdAt,

@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                          HttpServletResponse response,
                                          FilterChain filterChain) throws IOException, ServletException {
         var authorizationHeader = request.getHeader("Authorization");
-        if (!HasBearerAuthorization(authorizationHeader)) {
+        if (!hasBearerAuthorization(authorizationHeader)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private static boolean HasBearerAuthorization(String authorizationHeader) {
+    private static boolean hasBearerAuthorization(String authorizationHeader) {
         return authorizationHeader != null && authorizationHeader.startsWith(AUTHORIZATION_HEADER_BEGINNING);
     }
 

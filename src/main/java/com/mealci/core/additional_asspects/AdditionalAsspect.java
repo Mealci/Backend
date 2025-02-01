@@ -5,13 +5,13 @@ import lombok.Getter;
 @Getter
 public class AdditionalAsspect {
 
-    public boolean HasExcessiveFlatulence;
-    public boolean HasPain;
-    public boolean HasAbdominalBloating;
-    public boolean HasMucus;
-    public boolean HasFoodResidue;
-    public boolean HasColic;
-    public boolean HasUnusualSmells;
+    public final boolean hasExcessiveFlatulence;
+    public final boolean hasPain;
+    public final boolean hasAbdominalBloating;
+    public final boolean hasMucus;
+    public final boolean hasFoodResidue;
+    public final boolean hasColic;
+    public final boolean hasUnusualSmells;
 
     private AdditionalAsspect(boolean hasExcessiveFlatulence,
                               boolean hasPain,
@@ -20,13 +20,13 @@ public class AdditionalAsspect {
                               boolean hasFoodResidue,
                               boolean hasColic,
                               boolean hasUnusualSmells) {
-        this.HasExcessiveFlatulence = hasExcessiveFlatulence;
-        this.HasPain = hasPain;
-        this.HasAbdominalBloating = hasAbdominalBloating;
-        this.HasMucus = hasMucus;
-        this.HasFoodResidue = hasFoodResidue;
-        this.HasColic = hasColic;
-        this.HasUnusualSmells = hasUnusualSmells;
+        this.hasExcessiveFlatulence = hasExcessiveFlatulence;
+        this.hasPain = hasPain;
+        this.hasAbdominalBloating = hasAbdominalBloating;
+        this.hasMucus = hasMucus;
+        this.hasFoodResidue = hasFoodResidue;
+        this.hasColic = hasColic;
+        this.hasUnusualSmells = hasUnusualSmells;
     }
 
     public static AdditionalAsspect create(boolean hasExcessiveFlatulence,

@@ -9,12 +9,12 @@ import java.time.Instant;
 
 @Getter
 public class PoopMonitoring {
-    public Instant createdAt;
-    public StoolComposition stoolComposition;
-    public int quantity;
-    public Feeling feeling;
-    public AdditionalAsspect additionalAsspect;
-    public int poopingNumber;
+    public final Instant createdAt;
+    public final StoolComposition stoolComposition;
+    public final int quantity;
+    public final Feeling feeling;
+    public final AdditionalAsspect additionalAsspect;
+    public final int poopingNumber;
 
     private PoopMonitoring(Instant ceratedAt,
                            StoolComposition stoolComposition,

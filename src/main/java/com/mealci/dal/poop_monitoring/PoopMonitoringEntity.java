@@ -19,13 +19,13 @@ public class PoopMonitoringEntity {
     public int stoolComposition;
     public int quantity;
     public int feeling;
-    public boolean HasExcessiveFlatulence;
-    public boolean HasPain;
-    public boolean HasAbdominalBloating;
-    public boolean HasMucus;
-    public boolean HasFoodResidue;
-    public boolean HasColic;
-    public boolean HasUnusualSmells;
+    public boolean hasExcessiveFlatulence;
+    public boolean hasPain;
+    public boolean hasAbdominalBloating;
+    public boolean hasMucus;
+    public boolean hasFoodResidue;
+    public boolean hasColic;
+    public boolean hasUnusualSmells;
     public int poopingNumber;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    public static final String BEARER_AUTH = "BearerAuth";
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -48,11 +49,11 @@ public class SecurityConfig {
                         .title("Mon API")
                         .version("1.0")
                         .description("Documentation de l'API avec Swagger et JWT"))
-                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
+                .addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH))
                 .components(new io.swagger.v3.oas.models.Components()
-                        .addSecuritySchemes("BearerAuth",
+                        .addSecuritySchemes(BEARER_AUTH,
                                 new SecurityScheme()
-                                        .name("BearerAuth")
+                                        .name(BEARER_AUTH)
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")));
