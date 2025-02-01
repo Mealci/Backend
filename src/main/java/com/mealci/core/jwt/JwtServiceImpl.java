@@ -51,7 +51,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     public boolean isTokenValid(String token) {
-        return !isTokenExpired(token);
+        return !isTokenExpired(token) && hasEmail(token);
     }
 
     public String extractEmail() {
@@ -68,6 +68,10 @@ public class JwtServiceImpl implements JwtService {
 
     public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+    }
+
+    private boolean hasEmail(String token) {
+        return getClaim(token, "email", String.class) != null;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
