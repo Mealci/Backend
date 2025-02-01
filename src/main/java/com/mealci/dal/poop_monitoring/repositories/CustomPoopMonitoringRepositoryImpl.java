@@ -30,21 +30,21 @@ public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringR
     }
 
     public Result<PoopMonitoring> create(PoopMonitoring poopMonitoring, String email) {
-        try {
-            var user = userRepository.findByEmail(email);
-            if (user.isEmpty()) {
-                return Result.failure("User not found");
-            }
-
-            var entity = PoopMonitoringProfile.toEntity(poopMonitoring);
-            entity.setUser(user.get());
-            poopMonitoringRepository.save(entity);
-
-            var result = PoopMonitoringProfile.toDomain(entity);
-            return Result.success(result);
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        var user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            return Result.failure("User not found");
         }
-        return null;
+
+        var entity = PoopMonitoringProfile.toEntity(poopMonitoring);
+        entity.setUser(user.get());
+
+        try {
+            poopMonitoringRepository.save(entity);
+        } catch (Exception exception) {
+            return Result.failure(exception.getMessage());
+        }
+
+        var result = PoopMonitoringProfile.toDomain(entity);
+        return Result.success(result);
     }
 }
