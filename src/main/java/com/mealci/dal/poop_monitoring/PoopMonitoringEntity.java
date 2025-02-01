@@ -29,5 +29,33 @@ public class PoopMonitoringEntity {
     public int poopingNumber;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    public UserEntity user;
+
+    public PoopMonitoringEntity(Instant createdAt,
+                                int stoolComposition,
+                                int quantity,
+                                int feeling,
+                                boolean hasExcessiveFlatulence,
+                                boolean hasPain,
+                                boolean hasAbdominalBloating,
+                                boolean hasMucus,
+                                boolean hasFoodResidue,
+                                boolean hasColic,
+                                boolean hasUnusualSmells,
+                                int poopingNumber) {
+        this.createdAt = createdAt;
+        this.stoolComposition = stoolComposition;
+        this.quantity = quantity;
+        this.feeling = feeling;
+        this.hasExcessiveFlatulence = hasExcessiveFlatulence;
+        this.hasPain = hasPain;
+        this.hasAbdominalBloating = hasAbdominalBloating;
+        this.hasMucus = hasMucus;
+        this.hasFoodResidue = hasFoodResidue;
+        this.hasColic = hasColic;
+        this.hasUnusualSmells = hasUnusualSmells;
+        this.poopingNumber = poopingNumber;
+    }
+
+    public PoopMonitoringEntity() {}
 }

@@ -6,26 +6,26 @@ import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.stool_composition.StoolComposition;
 
 public class PoopMonitoringProfile {
+    private PoopMonitoringProfile() {}
+
     public static PoopMonitoringEntity toEntity(PoopMonitoring poopMonitoring) {
         if (poopMonitoring == null) {
             return null;
         }
 
-        var entity = new PoopMonitoringEntity();
-        entity.setCreatedAt(poopMonitoring.createdAt);
-        entity.setStoolComposition(poopMonitoring.stoolComposition.getValue());
-        entity.setQuantity(poopMonitoring.getQuantity());
-        entity.setFeeling(poopMonitoring.getFeeling().getValue());
-        entity.setHasExcessiveFlatulence(poopMonitoring.additionalAsspect.hasExcessiveFlatulence);
-        entity.setHasPain(poopMonitoring.additionalAsspect.hasPain);
-        entity.setHasAbdominalBloating(poopMonitoring.additionalAsspect.hasAbdominalBloating);
-        entity.setHasMucus(poopMonitoring.additionalAsspect.hasMucus);
-        entity.setHasFoodResidue(poopMonitoring.additionalAsspect.hasFoodResidue);
-        entity.setHasColic(poopMonitoring.additionalAsspect.hasColic);
-        entity.setHasUnusualSmells(poopMonitoring.additionalAsspect.hasUnusualSmells);
-        entity.setPoopingNumber(poopMonitoring.poopingNumber);
-
-        return entity;
+        return new PoopMonitoringEntity(
+                poopMonitoring.createdAt,
+                poopMonitoring.stoolComposition.getValue(),
+                poopMonitoring.getQuantity(),
+                poopMonitoring.getFeeling().getValue(),
+                poopMonitoring.additionalAsspect.hasExcessiveFlatulence,
+                poopMonitoring.additionalAsspect.hasPain,
+                poopMonitoring.additionalAsspect.hasAbdominalBloating,
+                poopMonitoring.additionalAsspect.hasMucus,
+                poopMonitoring.additionalAsspect.hasFoodResidue,
+                poopMonitoring.additionalAsspect.hasColic,
+                poopMonitoring.additionalAsspect.hasUnusualSmells,
+                poopMonitoring.poopingNumber);
     }
 
     public static PoopMonitoring toDomain(PoopMonitoringEntity entity) {
