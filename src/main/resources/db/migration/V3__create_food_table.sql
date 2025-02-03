@@ -5,6 +5,7 @@ CREATE TABLE food
     category INTEGER                                  NOT NULL,
     quantity DOUBLE PRECISION                         NOT NULL,
     measure  INTEGER                                  NOT NULL,
+    brand    VARCHAR(255),
     user_id  INTEGER                                  NOT NULL,
     CONSTRAINT pk_food PRIMARY KEY (id)
 );

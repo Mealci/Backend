@@ -17,6 +17,7 @@ public class FoodEntity {
     private int category;
     private double quantity;
     private int measure;
+    private String brand;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public UserEntity user;
