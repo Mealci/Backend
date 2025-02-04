@@ -1,4 +1,4 @@
-package com.mealci.core.controller;
+package com.mealci.api.controllers.home;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;

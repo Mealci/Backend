@@ -5,12 +5,6 @@ import com.mealci.core.user_role.UserRole;
 import com.mealci.core.users.User;
 
 public class UserProfile {
-
-    private UserProfile() {
-        throw new IllegalStateException("Utility class");
-    }
-
-
     public static UserEntity toEntity(User user) {
         if (user == null) {
             return null;

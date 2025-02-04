@@ -1,0 +1,12 @@
+name: 'mealci'
+
+services:
+  postgres:
+    container_name: 'db'
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=Mealci'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
