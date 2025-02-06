@@ -41,11 +41,7 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
                 additionalAspect);
 
         var user = userService.getCurrentUser();
-        if (!user.isSuccess()) {
-            return Result.failure(user.getErrorCode());
-        }
-
-        var email = user.getValue().email.address;
+        var email = user.email.address;
         var result = customPoopMonitoringRepository.create(poopMonitoring, email);
         if (!result.isSuccess()) {
             return Result.failure(result.getErrorCode());

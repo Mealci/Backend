@@ -1,10 +1,8 @@
 package com.mealci.core.food;
 
 import com.mealci.core.food.create.CreateFoodRequest;
-import com.mealci.core.results.Result;
 import com.mealci.core.users.UserService;
 import com.mealci.dal.food.repositories.CustomFoodRepository;
-import com.mealci.dal.food.repositories.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,12 +20,8 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Result<Food> create(CreateFoodRequest request) {
+    public Food create(CreateFoodRequest request) {
         var user = userService.getCurrentUser();
-        if (!user.isSuccess()) {
-            return Result.failure(user.getErrorCode());
-        }
-
         var food = Food.create(
                 request.name(),
                 request.category(),
@@ -36,19 +30,14 @@ public class FoodServiceImpl implements FoodService {
                 request.brand(),
                 request.state());
 
-        var email = user.getValue().email.address;
-        var createFood = customFoodRepository.create(food, email);
+        var email = user.email.address;
 
-        return Result.success(createFood);
+        return customFoodRepository.create(food, email);
     }
 
     @Override
-    public Result<List<Food>> batchCreate(List<CreateFoodRequest> request) {
+    public List<Food> batchCreate(List<CreateFoodRequest> request) {
         var user = userService.getCurrentUser();
-        if (!user.isSuccess()) {
-            return Result.failure(user.getErrorCode());
-        }
-
         var foods = new ArrayList<Food>();
         for (var food : request) {
             var entity = Food.create(
@@ -62,9 +51,8 @@ public class FoodServiceImpl implements FoodService {
             foods.add(entity);
         }
 
-        var email = user.getValue().email.address;
-        var result = customFoodRepository.batchCreate(foods, email);
+        var email = user.email.address;
 
-        return Result.success(result);
+        return customFoodRepository.batchCreate(foods, email);
     }
 }

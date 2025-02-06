@@ -1,5 +1,6 @@
 package com.mealci.api.controllers.food;
 
+import com.mealci.core.food.Food;
 import com.mealci.core.food.FoodService;
 import com.mealci.core.food.create.CreateFoodRequest;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +21,16 @@ public class FoodController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<?> create(@RequestBody CreateFoodRequest request) {
+    public ResponseEntity<Food> create(@RequestBody CreateFoodRequest request) {
         var result = foodService.create(request);
-        if (!result.isSuccess()) {
-            return ResponseEntity.badRequest().body(result.getErrorCode());
-        }
 
-        return ResponseEntity.ok(result.getValue());
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("create/batch")
-    public ResponseEntity<?> createBatch(@RequestBody List<CreateFoodRequest> request) {
+    public ResponseEntity<List<Food>> createBatch(@RequestBody List<CreateFoodRequest> request) {
         var result = foodService.batchCreate(request);
-        if (!result.isSuccess()) {
-            return ResponseEntity.badRequest().body(result.getErrorCode());
-        }
 
-        return ResponseEntity.ok(result.getValue());
+        return ResponseEntity.ok(result);
     }
 }
