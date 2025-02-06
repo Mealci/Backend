@@ -29,8 +29,7 @@ public class FoodServiceImpl implements FoodService {
                 request.category(),
                 request.quantity(),
                 request.measure(),
-                request.brand(),
-                user.getValue());
+                request.brand());
 
         var email = user.getValue().email.address;
         var createFood = customFoodRepository.create(food, email);
