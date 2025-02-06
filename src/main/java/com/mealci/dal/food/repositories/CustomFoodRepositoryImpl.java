@@ -3,9 +3,15 @@ package com.mealci.dal.food.repositories;
 import com.mealci.core.exceptions.DalException;
 import com.mealci.core.exceptions.NotFoundException;
 import com.mealci.core.food.Food;
+import com.mealci.core.food.get_foods.GetFoodResponse;
+import com.mealci.core.food_category.FoodCategory;
+import com.mealci.core.food_state.FoodState;
+import com.mealci.core.measure.Measure;
+import com.mealci.core.users.User;
 import com.mealci.dal.food.FoodEntity;
 import com.mealci.dal.food.FoodProfile;
 import com.mealci.dal.users.repositories.CustomUserRepository;
+import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -15,11 +21,13 @@ import java.util.List;
 public class CustomFoodRepositoryImpl implements CustomFoodRepository {
     private final FoodRepository foodRepository;
     private final CustomUserRepository customUserRepository;
+    private final UserRepository userRepository;
 
     public CustomFoodRepositoryImpl(FoodRepository foodRepository,
-                                    CustomUserRepository customUserRepository) {
+                                    CustomUserRepository customUserRepository, UserRepository userRepository) {
         this.foodRepository = foodRepository;
         this.customUserRepository = customUserRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -63,6 +71,30 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
         var result = foodRepository.save(food.get());
 
         return FoodProfile.toDomain(result);
+    }
+
+    @Override
+    public List<GetFoodResponse> getFoods(User user) {
+        var entity = userRepository.findByEmail(user.email.address);
+        if (entity.isEmpty()) {
+            throw new NotFoundException("user not found");
+        }
+
+        var result = foodRepository.findByUser(entity.get());
+        var foods = new ArrayList<GetFoodResponse>();
+        for (var food : result) {
+            var foodResponse = new GetFoodResponse(
+                    food.getId(),
+                    Food.create(food.getName(),
+                            FoodCategory.fromValue(food.getCategory()),
+                            food.getQuantity(),
+                            Measure.fromValue(food.getMeasure()),
+                            food.getBrand(),
+                            FoodState.fromValue(food.getState())));
+            foods.add(foodResponse);
+        }
+
+        return foods;
     }
 
     private FoodEntity setUser(Food food, String email) {

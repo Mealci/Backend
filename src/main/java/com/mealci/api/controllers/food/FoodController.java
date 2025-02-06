@@ -3,6 +3,7 @@ package com.mealci.api.controllers.food;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.FoodService;
 import com.mealci.core.food.create.CreateFoodRequest;
+import com.mealci.core.food.get_foods.GetFoodResponse;
 import com.mealci.core.food_state.FoodState;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,9 @@ public class FoodController {
     }
 
     @GetMapping("getFoods")
-    public ResponseEntity<List<Food>> getFoods() {
-        var result 
+    public ResponseEntity<List<GetFoodResponse>> getFoods() {
+        var result = foodService.getFoods();
+
+        return ResponseEntity.ok(result);
     }
 }
