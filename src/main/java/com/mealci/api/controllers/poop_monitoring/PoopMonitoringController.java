@@ -20,12 +20,12 @@ public class PoopMonitoringController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Result<PoopMonitoring>> create(@RequestBody CreatePoopMonitoringRequest request) {
+    public ResponseEntity<PoopMonitoring> create(@RequestBody CreatePoopMonitoringRequest request) {
         var result = poopMonitoringService.create(request);
         if (!result.isSuccess()) {
-            return ResponseEntity.badRequest().body(result);
+            return ResponseEntity.badRequest().body(result.getValue());
         }
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(result.getValue());
     }
 }

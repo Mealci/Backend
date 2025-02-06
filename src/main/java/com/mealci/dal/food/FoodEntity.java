@@ -21,4 +21,18 @@ public class FoodEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public UserEntity user;
+
+    public FoodEntity(String name,
+                      int category,
+                      double quantity,
+                      int measure,
+                      String brand) {
+        this.name = name;
+        this.category = category;
+        this.quantity = quantity;
+        this.measure = measure;
+        this.brand = brand;
+    }
+
+    public FoodEntity() {}
 }
