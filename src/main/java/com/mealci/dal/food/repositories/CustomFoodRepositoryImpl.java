@@ -1,6 +1,7 @@
 package com.mealci.dal.food.repositories;
 
 import com.mealci.core.exceptions.DalException;
+import com.mealci.core.exceptions.NotFoundException;
 import com.mealci.core.food.Food;
 import com.mealci.dal.food.FoodEntity;
 import com.mealci.dal.food.FoodProfile;
@@ -48,6 +49,20 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
         } catch (Exception exception) {
             throw new DalException(exception.getMessage());
         }
+    }
+
+    @Override
+    public Food patchFoodState(int id, int foodState) {
+        var food = foodRepository.findById((long) id);
+        if (food.isEmpty()) {
+            throw new NotFoundException("food not found");
+        }
+
+        food.get().setState(foodState);
+
+        var result = foodRepository.save(food.get());
+
+        return FoodProfile.toDomain(result);
     }
 
     private FoodEntity setUser(Food food, String email) {

@@ -1,7 +1,7 @@
 package com.mealci.api.configuration.handlers;
 
 import com.mealci.core.exceptions.DalException;
-import com.mealci.core.exceptions.UserNotFoundException;
+import com.mealci.core.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserNotFoundExceptionHandler {
 
     @ExceptionHandler(DalException.class)
-    public ResponseEntity<String> handleDalException(UserNotFoundException exception) {
+    public ResponseEntity<String> handleDalException(NotFoundException exception) {
         return ResponseEntity.internalServerError().body(exception.getMessage());
     }
 }

@@ -1,6 +1,7 @@
 package com.mealci.core.food;
 
 import com.mealci.core.food.create.CreateFoodRequest;
+import com.mealci.core.food_state.FoodState;
 import com.mealci.core.users.UserService;
 import com.mealci.dal.food.repositories.CustomFoodRepository;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,10 @@ public class FoodServiceImpl implements FoodService {
         var email = user.email.address;
 
         return customFoodRepository.batchCreate(foods, email);
+    }
+
+    @Override
+    public Food patchFoodState(int id, FoodState state) {
+        return customFoodRepository.patchFoodState(id, state.getValue());
     }
 }
