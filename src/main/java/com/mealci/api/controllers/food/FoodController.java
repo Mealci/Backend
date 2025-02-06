@@ -39,4 +39,9 @@ public class FoodController {
 
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("getFoods")
+    public ResponseEntity<List<Food>> getFoods() {
+        var result 
+    }
 }
