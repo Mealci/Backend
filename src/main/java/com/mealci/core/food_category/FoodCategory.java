@@ -4,17 +4,17 @@ import lombok.Getter;
 
 @Getter
 public enum FoodCategory {
-    BEVERAGE(1),
-    DAIRY_PRODUCTS(2),
-    FRUITS(3),
-    LEGUMES(4),
-    VEGETABLES(5),
+    FRUITS(1),
+    VEGETABLES(2),
+    CEREALS(3),
+    PROTEINS(4),
+    DAIRY_PRODUCTS(5),
     STARCHY(6),
-    SUGAR_PRODUCTS(7),
-    SPICES(8),
-    BUTTERFAT(9),
-    FODMAPS(10),
-    DIETS(11);
+    OILS(7),
+    SUGAR_PRODUCTS(8),
+    BEVERAGE(9),
+    SPICES(10),
+    PREPARED_MEALS(11);
 
     private final int value;
 
