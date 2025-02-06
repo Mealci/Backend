@@ -6,6 +6,7 @@ import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FoodProfile {
@@ -41,7 +42,7 @@ public class FoodProfile {
 
     public static List<Food> toDomain(List<FoodEntity> entities) {
         if (entities == null || entities.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
 
         var foodEntities = new ArrayList<Food>();
