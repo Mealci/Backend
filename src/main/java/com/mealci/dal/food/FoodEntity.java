@@ -1,0 +1,38 @@
+package com.mealci.dal.food;
+
+import com.mealci.dal.users.UserEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "food")
+public class FoodEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    private int category;
+    private double quantity;
+    private int measure;
+    private String brand;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    public UserEntity user;
+
+    public FoodEntity(String name,
+                      int category,
+                      double quantity,
+                      int measure,
+                      String brand) {
+        this.name = name;
+        this.category = category;
+        this.quantity = quantity;
+        this.measure = measure;
+        this.brand = brand;
+    }
+
+    public FoodEntity() {}
+}

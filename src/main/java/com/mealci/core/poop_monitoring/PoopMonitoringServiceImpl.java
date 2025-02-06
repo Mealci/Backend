@@ -1,11 +1,10 @@
 package com.mealci.core.poop_monitoring;
 
 import com.mealci.core.additional_asspects.AdditionalAsspect;
-import com.mealci.core.jwt.JwtService;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
 import com.mealci.core.results.Result;
+import com.mealci.core.users.UserService;
 import com.mealci.dal.poop_monitoring.repositories.CustomPoopMonitoringRepository;
-import com.mealci.dal.users.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -15,20 +14,16 @@ import java.util.List;
 @Service
 public class PoopMonitoringServiceImpl implements PoopMonitoringService{
     private final CustomPoopMonitoringRepository customPoopMonitoringRepository;
-    private final JwtService jwtService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public PoopMonitoringServiceImpl(CustomPoopMonitoringRepository customPoopMonitoringRepository,
-                                     JwtService jwtService,
-                                     UserRepository userRepository) {
+                                     UserService userService) {
         this.customPoopMonitoringRepository = customPoopMonitoringRepository;
-        this.jwtService = jwtService;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
     public Result<PoopMonitoring> create(CreatePoopMonitoringRequest request) {
-        var email = jwtService.extractEmail();
         var additionalAspect = AdditionalAsspect.create(
                 request.HasExcessiveFlatulence(),
                 request.HasPain(),
@@ -45,12 +40,13 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
                 request.feeling(),
                 additionalAspect);
 
-        var user = userRepository.findByEmailEntity(email);
-        if (user.isEmpty()) {
-            return Result.failure("Can't find user with this email");
+        var user = userService.getCurrentUser();
+        if (!user.isSuccess()) {
+            return Result.failure(user.getErrorCode());
         }
 
-        var result = customPoopMonitoringRepository.create(poopMonitoring, user.get().email.address);
+        var email = user.getValue().email.address;
+        var result = customPoopMonitoringRepository.create(poopMonitoring, email);
         if (!result.isSuccess()) {
             return Result.failure(result.getErrorCode());
         }

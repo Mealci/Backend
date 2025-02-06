@@ -1,4 +1,4 @@
-package com.mealci.api.configuration.entrypoint;
+package com.mealci.api.configuration.entrypoints;
 
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.OpenAPI;

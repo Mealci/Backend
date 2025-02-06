@@ -1,4 +1,4 @@
-package com.mealci.api.configuration.entrypoint;
+package com.mealci.api.configuration.entrypoints;
 
 import com.mealci.core.jwt.JwtServiceImpl;
 import io.jsonwebtoken.JwtException;

@@ -1,4 +1,4 @@
-package com.mealci.api.configuration.entrypoint;
+package com.mealci.api.configuration.entrypoints;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;

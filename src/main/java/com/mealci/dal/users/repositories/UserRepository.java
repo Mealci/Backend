@@ -1,6 +1,8 @@
-package com.mealci.dal.users;
+package com.mealci.dal.users.repositories;
 
 import com.mealci.core.users.User;
+import com.mealci.dal.users.UserEntity;
+import com.mealci.dal.users.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -20,6 +22,4 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     }
 
     Optional<UserEntity> findByEmail(String email);
-
-    Optional<Integer> findIdByEmail(String email);
 }

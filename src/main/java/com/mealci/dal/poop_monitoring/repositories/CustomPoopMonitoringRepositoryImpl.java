@@ -3,7 +3,7 @@ package com.mealci.dal.poop_monitoring.repositories;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.results.Result;
 import com.mealci.dal.poop_monitoring.PoopMonitoringProfile;
-import com.mealci.dal.users.UserRepository;
+import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

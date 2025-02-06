@@ -8,7 +8,7 @@ import com.mealci.core.jwt.JwtService;
 import com.mealci.core.password.PasswordService;
 import com.mealci.core.user_role.UserRole;
 import com.mealci.core.users.User;
-import com.mealci.dal.users.UserRepository;
+import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
