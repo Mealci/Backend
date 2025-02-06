@@ -1,9 +1,11 @@
 package com.mealci.api.controllers.authentication;
 
+import com.mealci.api.configuration.entrypoints.SecurityConfig;
 import com.mealci.core.authentication.login.LoginRequest;
 import com.mealci.core.authentication.register.RegisterRequest;
 import com.mealci.core.authentication.AuthenticationService;
 import com.mealci.core.exceptions.CoreException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ public class AuthenticationController {
         this.authenticationService = registerService;
     }
 
+    @SecurityRequirement(name = SecurityConfig.PERMIT_ALL)
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         try {
@@ -31,6 +34,7 @@ public class AuthenticationController {
         }
     }
 
+    @SecurityRequirement(name = SecurityConfig.PERMIT_ALL)
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         try {
