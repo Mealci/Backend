@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum Measure {
     LITER(1),
-    KILOGRAM(2);
+    KILOGRAM(2),
+    PIECE(3);
 
     private final int value;
 
