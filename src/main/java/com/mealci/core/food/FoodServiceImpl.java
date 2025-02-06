@@ -1,6 +1,7 @@
 package com.mealci.core.food;
 
 import com.mealci.core.food.create.CreateFoodRequest;
+import com.mealci.core.food.get_foods.GetFoodResponse;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.users.UserService;
 import com.mealci.dal.food.repositories.CustomFoodRepository;
@@ -60,5 +61,12 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public Food patchFoodState(int id, FoodState state) {
         return customFoodRepository.patchFoodState(id, state.getValue());
+    }
+
+    @Override
+    public List<GetFoodResponse> getFoods() {
+        var user = userService.getCurrentUser();
+
+        return customFoodRepository.getFoods(user);
     }
 }
