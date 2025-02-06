@@ -7,4 +7,5 @@ import java.util.List;
 public interface CustomFoodRepository {
     Food create(Food food, String email);
     List<Food> batchCreate(List<Food> foods, String email);
+    Food patchFoodState(int id, int foodState);
 }
