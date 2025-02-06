@@ -5,6 +5,9 @@ import com.mealci.core.food_category.FoodCategory;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FoodProfile {
     private FoodProfile() {}
 
@@ -34,5 +37,18 @@ public class FoodProfile {
                 Measure.fromValue(entity.getMeasure()),
                 entity.getBrand(),
                 FoodState.fromValue(entity.getState()));
+    }
+
+    public static List<Food> toDomain(List<FoodEntity> entities) {
+        if (entities == null || entities.isEmpty()) {
+            return null;
+        }
+
+        var foodEntities = new ArrayList<Food>();
+        for (FoodEntity entity : entities) {
+            foodEntities.add(toDomain(entity));
+        }
+
+        return foodEntities;
     }
 }
