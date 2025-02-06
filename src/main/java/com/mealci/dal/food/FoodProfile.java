@@ -2,6 +2,7 @@ package com.mealci.dal.food;
 
 import com.mealci.core.food.Food;
 import com.mealci.core.food_category.FoodCategory;
+import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 
 public class FoodProfile {
@@ -17,7 +18,8 @@ public class FoodProfile {
                 food.category.getValue(),
                 food.quantity,
                 food.measure.getValue(),
-                food.brand);
+                food.brand,
+                food.state.getValue());
     }
 
     public static Food toDomain(FoodEntity entity) {
@@ -30,6 +32,7 @@ public class FoodProfile {
                 FoodCategory.fromValue(entity.getCategory()),
                 entity.getQuantity(),
                 Measure.fromValue(entity.getMeasure()),
-                entity.getBrand());
+                entity.getBrand(),
+                FoodState.fromValue(entity.getState()));
     }
 }
