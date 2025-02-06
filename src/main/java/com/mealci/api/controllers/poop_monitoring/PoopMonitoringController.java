@@ -1,9 +1,10 @@
 package com.mealci.api.controllers.poop_monitoring;
 
+import com.mealci.api.configuration.entrypoints.SecurityConfig;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.poop_monitoring.PoopMonitoringService;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
-import com.mealci.core.results.Result;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +20,11 @@ public class PoopMonitoringController {
         this.poopMonitoringService = poopMonitoringService;
     }
 
+    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
     @PostMapping("create")
     public ResponseEntity<PoopMonitoring> create(@RequestBody CreatePoopMonitoringRequest request) {
         var result = poopMonitoringService.create(request);
-        if (!result.isSuccess()) {
-            return ResponseEntity.badRequest().body(result.getValue());
-        }
 
-        return ResponseEntity.ok(result.getValue());
+        return ResponseEntity.ok(result);
     }
 }

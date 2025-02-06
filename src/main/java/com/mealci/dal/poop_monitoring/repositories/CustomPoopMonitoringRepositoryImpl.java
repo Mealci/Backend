@@ -1,7 +1,8 @@
 package com.mealci.dal.poop_monitoring.repositories;
 
+import com.mealci.core.exceptions.DalException;
+import com.mealci.core.exceptions.NotFoundException;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
-import com.mealci.core.results.Result;
 import com.mealci.dal.poop_monitoring.PoopMonitoringProfile;
 import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -17,10 +18,10 @@ public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringR
         this.userRepository = userRepository;
     }
 
-    public Result<PoopMonitoring> create(PoopMonitoring poopMonitoring, String email) {
+    public PoopMonitoring create(PoopMonitoring poopMonitoring, String email) {
         var user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            return Result.failure("User not found");
+            throw new NotFoundException("user not found");
         }
 
         var entity = PoopMonitoringProfile.toEntity(poopMonitoring);
@@ -29,10 +30,9 @@ public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringR
         try {
             poopMonitoringRepository.save(entity);
         } catch (Exception exception) {
-            return Result.failure(exception.getMessage());
+            throw new DalException(exception.getMessage());
         }
 
-        var result = PoopMonitoringProfile.toDomain(entity);
-        return Result.success(result);
+        return PoopMonitoringProfile.toDomain(entity);
     }
 }

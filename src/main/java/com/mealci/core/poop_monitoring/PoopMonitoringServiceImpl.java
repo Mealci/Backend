@@ -2,14 +2,11 @@ package com.mealci.core.poop_monitoring;
 
 import com.mealci.core.additional_asspects.AdditionalAsspect;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
-import com.mealci.core.results.Result;
 import com.mealci.core.users.UserService;
 import com.mealci.dal.poop_monitoring.repositories.CustomPoopMonitoringRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.util.List;
-
 
 @Service
 public class PoopMonitoringServiceImpl implements PoopMonitoringService{
@@ -23,7 +20,7 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
     }
 
     @Override
-    public Result<PoopMonitoring> create(CreatePoopMonitoringRequest request) {
+    public PoopMonitoring create(CreatePoopMonitoringRequest request) {
         var additionalAspect = AdditionalAsspect.create(
                 request.HasExcessiveFlatulence(),
                 request.HasPain(),
@@ -42,21 +39,7 @@ public class PoopMonitoringServiceImpl implements PoopMonitoringService{
 
         var user = userService.getCurrentUser();
         var email = user.email.address;
-        var result = customPoopMonitoringRepository.create(poopMonitoring, email);
-        if (!result.isSuccess()) {
-            return Result.failure(result.getErrorCode());
-        }
 
-        return Result.success(poopMonitoring);
-    }
-
-    @Override
-    public PoopMonitoring delete(int id) {
-        return null;
-    }
-
-    @Override
-    public List<PoopMonitoring> getByUserId(int id) {
-        return List.of();
+        return customPoopMonitoringRepository.create(poopMonitoring, email);
     }
 }
