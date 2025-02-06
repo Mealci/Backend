@@ -1,7 +1,7 @@
 package com.mealci.core.users;
 
+import com.mealci.core.exceptions.UserNotFoundException;
 import com.mealci.core.jwt.JwtService;
-import com.mealci.core.results.Result;
 import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +17,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<User> getCurrentUser() {
+    public User getCurrentUser() {
         var email = jwtService.extractEmail();
         var user = userRepository.findByEmailEntity(email);
 
-        return user.map(Result::success)
-                .orElseGet(() -> Result.failure("Can't find current user"));
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        return user.get();
     }
 }
