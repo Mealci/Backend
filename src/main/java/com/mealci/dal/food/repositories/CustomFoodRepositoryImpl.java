@@ -14,6 +14,7 @@ import com.mealci.dal.users.repositories.CustomUserRepository;
 import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +96,13 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
         }
 
         return foods;
+    }
+
+    @Override
+    public List<Food> getFoodsBetween(Instant from, Instant to) {
+        var result = foodRepository.findByCreateAtBetween(from, to);
+
+        return FoodProfile.toDomain(result);
     }
 
     private FoodEntity setUser(Food food, String email) {

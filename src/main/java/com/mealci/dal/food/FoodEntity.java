@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Entity
 @Getter
 @Setter
@@ -19,6 +21,7 @@ public class FoodEntity {
     private int measure;
     private String brand;
     private int state;
+    private Instant createAt;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public UserEntity user;
@@ -35,6 +38,7 @@ public class FoodEntity {
         this.measure = measure;
         this.brand = brand;
         this.state = state;
+        this.createAt = Instant.now();
     }
 
     public FoodEntity() {}

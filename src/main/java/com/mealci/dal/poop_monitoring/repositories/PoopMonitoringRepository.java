@@ -7,5 +7,5 @@ import java.time.Instant;
 import java.util.List;
 
 public interface PoopMonitoringRepository extends JpaRepository<PoopMonitoringEntity, Long> {
-    List<PoopMonitoringEntity> findByUserIdAndCreatedAtBetween(int id, Instant startOfDay, Instant endOfDay);
+    List<PoopMonitoringEntity> findByCreatedAtBetween(Instant from, Instant to);
 }
