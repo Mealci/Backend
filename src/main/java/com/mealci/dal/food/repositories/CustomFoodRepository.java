@@ -4,6 +4,7 @@ import com.mealci.core.food.Food;
 import com.mealci.core.food.get_foods.GetFoodResponse;
 import com.mealci.core.users.User;
 
+import java.time.Instant;
 import java.util.List;
 
 public interface CustomFoodRepository {
@@ -11,4 +12,5 @@ public interface CustomFoodRepository {
     List<Food> batchCreate(List<Food> foods, String email);
     Food patchFoodState(int id, int foodState);
     List<GetFoodResponse> getFoods(User user);
+    List<Food> getFoodsBetween(Instant from, Instant to);
 }

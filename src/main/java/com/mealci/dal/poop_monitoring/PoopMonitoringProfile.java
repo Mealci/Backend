@@ -5,6 +5,10 @@ import com.mealci.core.feeling.Feeling;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.stool_composition.StoolComposition;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class PoopMonitoringProfile {
     private PoopMonitoringProfile() {}
 
@@ -46,5 +50,18 @@ public class PoopMonitoringProfile {
                 entity.quantity,
                 Feeling.fromValue(entity.feeling),
                 additionalAsspect);
+    }
+
+    public static List<PoopMonitoring> toDomain(List<PoopMonitoringEntity> entities) {
+        if (entities == null) {
+            return Collections.emptyList();
+        }
+
+        var poopEntities = new ArrayList<PoopMonitoring>();
+        for (PoopMonitoringEntity entity : entities) {
+            poopEntities.add(toDomain(entity));
+        }
+
+        return poopEntities;
     }
 }

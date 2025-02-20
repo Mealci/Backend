@@ -7,6 +7,9 @@ import com.mealci.dal.poop_monitoring.PoopMonitoringProfile;
 import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.util.List;
+
 @Repository
 public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringRepository {
     private final PoopMonitoringRepository poopMonitoringRepository;
@@ -34,5 +37,12 @@ public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringR
         }
 
         return PoopMonitoringProfile.toDomain(entity);
+    }
+
+    @Override
+    public List<PoopMonitoring> getPoopMonitoringBetween(Instant from, Instant to) {
+        var poops = poopMonitoringRepository.findByCreatedAtBetween(from, to);
+
+        return PoopMonitoringProfile.toDomain(poops);
     }
 }
