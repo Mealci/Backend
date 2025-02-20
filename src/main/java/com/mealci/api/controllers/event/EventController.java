@@ -1,5 +1,6 @@
 package com.mealci.api.controllers.event;
 
+import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.api.configuration.entrypoints.SecurityConfig;
 import com.mealci.core.event.EventService;
 import com.mealci.core.event.get_events_between.GetEventsBetweenResponse;
@@ -22,7 +23,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
     @GetMapping("getBetween")
     public ResponseEntity<GetEventsBetweenResponse> getBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date from,

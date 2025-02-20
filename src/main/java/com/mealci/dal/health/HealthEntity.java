@@ -23,10 +23,10 @@ public class HealthEntity {
     private int psychologicalState;
     private int physicalDolor;
 
-    @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "health", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SportEntity> sportEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sleep", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "health", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SleepEntity> sleepEntities = new ArrayList<>();
 
     @ManyToOne
