@@ -45,6 +45,6 @@ public class SecurityConfig {
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui.html")).permitAll()
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
     }
 }
