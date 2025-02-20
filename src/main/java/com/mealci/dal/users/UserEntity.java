@@ -1,6 +1,7 @@
 package com.mealci.dal.users;
 
 import com.mealci.dal.food.FoodEntity;
+import com.mealci.dal.health.HealthEntity;
 import com.mealci.dal.poop_monitoring.PoopMonitoringEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,8 +24,13 @@ public class UserEntity {
     public String password;
     public int role;
     public int age;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PoopMonitoringEntity> orders = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FoodEntity> foodEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HealthEntity> healthEntities = new ArrayList<>();
 }

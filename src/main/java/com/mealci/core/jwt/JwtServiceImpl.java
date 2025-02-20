@@ -15,6 +15,8 @@ import java.util.function.Function;
 public class JwtServiceImpl implements JwtService {
 
     public static final String EMAIL = "email";
+    public static final String ROLE = "role";
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -34,6 +36,7 @@ public class JwtServiceImpl implements JwtService {
                 .claim("firstName", user.firstName)
                 .claim("lastName", user.lastName)
                 .claim(EMAIL, user.email.address)
+                .claim(ROLE, user.role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key)
@@ -61,6 +64,10 @@ public class JwtServiceImpl implements JwtService {
 
     public String extractEmail(String jwt) {
         return extractAllClaims(jwt).get(EMAIL, String.class);
+    }
+
+    public String extractRole(String jwt) {
+        return extractAllClaims(jwt).get(ROLE, String.class);
     }
 
     public Date extractExpiration(String token) {

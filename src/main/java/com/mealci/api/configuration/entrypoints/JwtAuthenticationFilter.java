@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -23,12 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public static final String INVALID_TOKEN = "Invalid token";
 
     private final JwtServiceImpl jwtService;
-    private final JwtServiceImpl jwtServiceImpl;
 
-    public JwtAuthenticationFilter(JwtServiceImpl jwtService,
-                                   JwtServiceImpl jwtServiceImpl) {
+    public JwtAuthenticationFilter(JwtServiceImpl jwtService) {
         this.jwtService = jwtService;
-        this.jwtServiceImpl = jwtServiceImpl;
     }
 
     @Override
@@ -58,8 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         var context = SecurityContextHolder.getContext();
         if (context.getAuthentication() == null) {
-            var email = jwtServiceImpl.extractEmail(jwt);
-            registerAuthorizedUser(request, email);
+            registerAuthorizedUser(request, jwt);
         }
 
         request.setAttribute("jwt", jwt);
@@ -70,8 +67,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return authorizationHeader != null && authorizationHeader.startsWith(AUTHORIZATION_HEADER_BEGINNING);
     }
 
-    private static void registerAuthorizedUser(HttpServletRequest request, String email) {
-        var userDetails = new User(email, "", Collections.emptyList());
+    private void registerAuthorizedUser(HttpServletRequest request, String jwt) {
+        var email = jwtService.extractEmail(jwt);
+        var role = jwtService.extractRole(jwt);
+        var userDetails = new User(email, "", List.of(new SimpleGrantedAuthority(role)));
         var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);

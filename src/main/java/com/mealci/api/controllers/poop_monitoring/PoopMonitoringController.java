@@ -1,6 +1,6 @@
 package com.mealci.api.controllers.poop_monitoring;
 
-import com.mealci.api.configuration.entrypoints.SecurityConfig;
+import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.poop_monitoring.PoopMonitoringService;
 import com.mealci.core.poop_monitoring.create.CreatePoopMonitoringRequest;
@@ -20,7 +20,7 @@ public class PoopMonitoringController {
         this.poopMonitoringService = poopMonitoringService;
     }
 
-    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
     @PostMapping("create")
     public ResponseEntity<PoopMonitoring> create(@RequestBody CreatePoopMonitoringRequest request) {
         var result = poopMonitoringService.create(request);

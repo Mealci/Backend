@@ -1,6 +1,6 @@
 package com.mealci.api.controllers.food;
 
-import com.mealci.api.configuration.entrypoints.SecurityConfig;
+import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.FoodService;
 import com.mealci.core.food.create.CreateFoodRequest;
@@ -21,7 +21,7 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
     @PostMapping("create")
     public ResponseEntity<Food> create(@RequestBody CreateFoodRequest request) {
         var result = foodService.create(request);
@@ -29,7 +29,7 @@ public class FoodController {
         return ResponseEntity.ok(result);
     }
 
-    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
     @PostMapping("create/batch")
     public ResponseEntity<List<Food>> createBatch(@RequestBody List<CreateFoodRequest> request) {
         var result = foodService.batchCreate(request);
@@ -37,7 +37,7 @@ public class FoodController {
         return ResponseEntity.ok(result);
     }
 
-    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
     @PatchMapping("state/{id}/{state}")
     public ResponseEntity<Food> updateState(@PathVariable("id") int id,
                                             @PathVariable("state") FoodState state) {
@@ -46,7 +46,7 @@ public class FoodController {
         return ResponseEntity.ok(result);
     }
 
-    @SecurityRequirement(name = SecurityConfig.BEARER_AUTH)
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
     @GetMapping("getFoods")
     public ResponseEntity<List<GetFoodResponse>> getFoods() {
         var result = foodService.getFoods();

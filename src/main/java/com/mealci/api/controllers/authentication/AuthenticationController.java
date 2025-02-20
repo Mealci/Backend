@@ -1,5 +1,6 @@
 package com.mealci.api.controllers.authentication;
 
+import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.api.configuration.entrypoints.SecurityConfig;
 import com.mealci.core.authentication.login.LoginRequest;
 import com.mealci.core.authentication.register.RegisterRequest;
@@ -21,7 +22,7 @@ public class AuthenticationController {
         this.authenticationService = registerService;
     }
 
-    @SecurityRequirement(name = SecurityConfig.PERMIT_ALL)
+    @SecurityRequirement(name = OpenApiConfiguration.PERMIT_ALL)
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         try {
@@ -34,7 +35,7 @@ public class AuthenticationController {
         }
     }
 
-    @SecurityRequirement(name = SecurityConfig.PERMIT_ALL)
+    @SecurityRequirement(name = OpenApiConfiguration.PERMIT_ALL)
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         try {
