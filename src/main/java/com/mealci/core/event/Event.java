@@ -9,8 +9,8 @@ import java.util.List;
 
 @Getter
 public class Event extends ValueObject {
-    public List<Food> foods;
-    public List<PoopMonitoring> poops;
+    public final List<Food> foods;
+    public final List<PoopMonitoring> poops;
 
     private Event(List<Food> foods,
                   List<PoopMonitoring> poops) {

@@ -48,7 +48,7 @@ public class GetEventsBetweenDaysHandler
                 .flatMap(event -> event.poops.stream().map(poop -> new GetEventsBetweenDaysResponsePoop(
                         poop.stoolComposition,
                         poop.quantity)))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static List<GetEventsBetweenDaysResponseFood> getFoodsResponse(List<Event> value) {
@@ -60,6 +60,6 @@ public class GetEventsBetweenDaysHandler
                                 food.quantity,
                                 food.measure,
                                 food.state)))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

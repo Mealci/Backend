@@ -1,5 +1,7 @@
 package com.mealci.core.dates;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@UtilityClass
 public class DateHelper {
     public static List<Date> getDatesBetween(Date startDate, Date endDate) {
         var dates = new ArrayList<Date>();
