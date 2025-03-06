@@ -1,5 +1,6 @@
 package com.mealci.api.controllers.poop_monitoring;
 
+import com.mealci.api.configuration.ApplicationConfiguration;
 import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.core.poop_monitoring.PoopMonitoringService;

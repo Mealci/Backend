@@ -1,6 +1,6 @@
 package com.mealci.dal.users.repositories;
 
-import com.mealci.core.exceptions.DalException;
+import com.mealci.core.exceptions.NotFoundException;
 import com.mealci.dal.users.UserEntity;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +16,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     public UserEntity getByEmail(String email) {
         var user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            throw new DalException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         return user.get();

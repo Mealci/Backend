@@ -1,9 +1,9 @@
 package com.mealci.core.event;
 
-import com.mealci.core.event.get_events_between.GetEventsBetweenResponse;
-
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public interface EventService {
-    GetEventsBetweenResponse getEventsBetween(Date from, Date to);
+    Map<Date, List<Event>> getEventsByDays(List<Date> days);
 }

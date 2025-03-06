@@ -1,9 +1,9 @@
 package com.mealci.api.controllers.event;
 
+import an.awesome.pipelinr.Pipeline;
 import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
-import com.mealci.api.configuration.entrypoints.SecurityConfig;
-import com.mealci.core.event.EventService;
-import com.mealci.core.event.get_events_between.GetEventsBetweenResponse;
+import com.mealci.core.event.get_events_between_days.GetEventsBetweenDaysQuery;
+import com.mealci.core.event.get_events_between_days.responses.GetEventsBetweenDaysResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +17,17 @@ import java.util.Date;
 @RestController
 @RequestMapping("/event")
 public class EventController {
-    private final EventService eventService;
+    private final Pipeline pipeline;
 
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
+    public EventController(Pipeline pipeline) {
+        this.pipeline = pipeline;
     }
 
     @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
-    @GetMapping("getBetween")
-    public ResponseEntity<GetEventsBetweenResponse> getBetween(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date to) {
-        var result = eventService.getEventsBetween(from, to);
+    @GetMapping("getBetweenDays")
+    public ResponseEntity<GetEventsBetweenDaysResponse> getBetweenDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date from,
+                                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to) {
+        var result = new GetEventsBetweenDaysQuery(from, to).execute(pipeline);
 
         return ResponseEntity.ok(result);
     }

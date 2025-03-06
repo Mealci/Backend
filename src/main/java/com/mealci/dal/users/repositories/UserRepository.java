@@ -4,9 +4,11 @@ import com.mealci.core.users.User;
 import com.mealci.dal.users.UserEntity;
 import com.mealci.dal.users.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     boolean existsByEmail(String email);
 

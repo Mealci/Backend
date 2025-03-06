@@ -1,6 +1,7 @@
 package com.mealci.api.controllers.health;
 
 import an.awesome.pipelinr.Pipeline;
+import com.mealci.api.configuration.ApplicationConfiguration;
 import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.core.health.patch_health_psychological_state.PatchHealthPsychologicalStateCommand;
 import com.mealci.core.health.patch_health_psychological_state.PatchHealthPsychologicalStateRequest;

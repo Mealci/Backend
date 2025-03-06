@@ -1,5 +1,6 @@
 package com.mealci.api.controllers.food;
 
+import com.mealci.api.configuration.ApplicationConfiguration;
 import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.FoodService;
