@@ -1,6 +1,5 @@
 package com.mealci.dal.poop_monitoring.repositories;
 
-import com.mealci.core.exceptions.DalException;
 import com.mealci.core.exceptions.NotFoundException;
 import com.mealci.core.poop_monitoring.PoopMonitoring;
 import com.mealci.dal.poop_monitoring.PoopMonitoringProfile;
@@ -29,12 +28,7 @@ public class CustomPoopMonitoringRepositoryImpl implements CustomPoopMonitoringR
 
         var entity = PoopMonitoringProfile.toEntity(poopMonitoring);
         entity.setUser(user.get());
-
-        try {
-            poopMonitoringRepository.save(entity);
-        } catch (Exception exception) {
-            throw new DalException(exception.getMessage());
-        }
+        poopMonitoringRepository.save(entity);
 
         return PoopMonitoringProfile.toDomain(entity);
     }

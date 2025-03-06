@@ -2,7 +2,7 @@ package com.mealci.core.users;
 
 import com.mealci.core.base.Entity;
 import com.mealci.core.email.Email;
-import com.mealci.core.exceptions.CoreException;
+import com.mealci.core.exceptions.UnprocessableEntityException;
 import com.mealci.core.user_role.UserRole;
 import lombok.Getter;
 
@@ -52,15 +52,15 @@ public final class User extends Entity<String> {
                                           String lastName,
                                           int age) {
         if (firstName == null || firstName.isEmpty()) {
-            throw new CoreException("First name cannot be null or empty");
+            throw new UnprocessableEntityException("First name cannot be null or empty");
         }
 
         if (lastName == null || lastName.isEmpty()) {
-            throw new CoreException("Last name cannot be null or empty");
+            throw new UnprocessableEntityException("Last name cannot be null or empty");
         }
 
         if (age < 0 || age > 150) {
-            throw new CoreException("Age must be between 0 and 150");
+            throw new UnprocessableEntityException("Age must be between 0 and 150");
         }
     }
 }
