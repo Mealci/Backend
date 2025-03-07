@@ -96,6 +96,19 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
         return FoodProfile.toDomain(result);
     }
 
+    @Override
+    public List<GetFoodResponse> getFoodsByCategory(FoodCategory foodCategory, User user) {
+        var foods = getFoods(user);
+        var result = new ArrayList<GetFoodResponse>();
+        foods.forEach(item -> {
+            if (item.food().category == foodCategory) {
+                result.add(item);
+            }
+        });
+
+        return result;
+    }
+
     private FoodEntity setUser(Food food, String email) {
         var user = customUserRepository.getByEmail(email);
         var foodEntity = FoodProfile.toEntity(food);

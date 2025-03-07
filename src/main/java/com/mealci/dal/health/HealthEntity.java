@@ -35,10 +35,12 @@ public class HealthEntity {
 
     public HealthEntity(Instant created_at,
                         int psychologicalState,
-                        int physicalDolor) {
+                        int physicalDolor,
+                        UserEntity user) {
         this.created_at = created_at;
         this.psychologicalState = psychologicalState;
         this.physicalDolor = physicalDolor;
+        this.user = user;
     }
 
     public HealthEntity() {}

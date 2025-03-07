@@ -7,6 +7,7 @@ import com.mealci.core.jwt.JwtService;
 import com.mealci.core.password.PasswordService;
 import com.mealci.core.user_role.UserRole;
 import com.mealci.core.users.User;
+import com.mealci.dal.health.repositories.CustomHealthRepository;
 import com.mealci.dal.users.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,17 +19,20 @@ public class RegisterHandler implements Command.Handler<RegisterCommand, String>
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final CustomHealthRepository customHealthRepository;
 
     public RegisterHandler(AuthenticationService authenticationService,
                            PasswordService passwordService,
                            UserRepository userRepository,
                            JwtService jwtService,
-                           BCryptPasswordEncoder encoder) {
+                           BCryptPasswordEncoder encoder,
+                           CustomHealthRepository customHealthRepository) {
         this.authenticationService = authenticationService;
         this.passwordService = passwordService;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.encoder = encoder;
+        this.customHealthRepository = customHealthRepository;
     }
 
     @Override
@@ -41,7 +45,8 @@ public class RegisterHandler implements Command.Handler<RegisterCommand, String>
         passwordService.checkPasswordPolicy(password);
 
         var hashedPassword = encoder.encode(password);
-        var user = User.create(request.firstName(),
+        var user = User.create(
+                request.firstName(),
                 request.lastName(),
                 email,
                 hashedPassword,
@@ -49,6 +54,8 @@ public class RegisterHandler implements Command.Handler<RegisterCommand, String>
                 request.age());
 
         var result = userRepository.create(user);
+        customHealthRepository.initilize(email);
+
         return jwtService.generateToken(result);
     }
 }

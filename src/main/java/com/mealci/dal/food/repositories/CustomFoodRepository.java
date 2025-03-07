@@ -1,7 +1,9 @@
 package com.mealci.dal.food.repositories;
 
+import com.mealci.core.email.Email;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.get_foods.GetFoodResponse;
+import com.mealci.core.food_category.FoodCategory;
 import com.mealci.core.users.User;
 
 import java.time.Instant;
@@ -13,4 +15,5 @@ public interface CustomFoodRepository {
     Food patchFoodState(int id, int foodState);
     List<GetFoodResponse> getFoods(User user);
     List<Food> getFoodsBetween(Instant from, Instant to);
+    List<GetFoodResponse> getFoodsByCategory(FoodCategory category, User user);
 }

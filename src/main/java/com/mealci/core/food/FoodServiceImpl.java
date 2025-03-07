@@ -2,6 +2,7 @@ package com.mealci.core.food;
 
 import com.mealci.core.food.create.CreateFoodRequest;
 import com.mealci.core.food.get_foods.GetFoodResponse;
+import com.mealci.core.food_category.FoodCategory;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.users.UserService;
 import com.mealci.dal.food.repositories.CustomFoodRepository;
@@ -68,5 +69,10 @@ public class FoodServiceImpl implements FoodService {
         var user = userService.getCurrentUser();
 
         return customFoodRepository.getFoods(user);
+    }
+
+    @Override
+    public List<GetFoodResponse> getFoodsByCategory(FoodCategory category) {
+        return customFoodRepository.getFoodsByCategory(category, userService.getCurrentUser());
     }
 }
