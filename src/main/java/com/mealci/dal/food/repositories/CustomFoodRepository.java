@@ -1,6 +1,5 @@
 package com.mealci.dal.food.repositories;
 
-import com.mealci.core.email.Email;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.get_foods.GetFoodResponse;
 import com.mealci.core.food_category.FoodCategory;
