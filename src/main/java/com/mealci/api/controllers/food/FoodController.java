@@ -1,11 +1,11 @@
 package com.mealci.api.controllers.food;
 
-import com.mealci.api.configuration.ApplicationConfiguration;
 import com.mealci.api.configuration.entrypoints.OpenApiConfiguration;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.FoodService;
 import com.mealci.core.food.create.CreateFoodRequest;
 import com.mealci.core.food.get_foods.GetFoodResponse;
+import com.mealci.core.food_category.FoodCategory;
 import com.mealci.core.food_state.FoodState;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +51,14 @@ public class FoodController {
     @GetMapping("getFoods")
     public ResponseEntity<List<GetFoodResponse>> getFoods() {
         var result = foodService.getFoods();
+
+        return ResponseEntity.ok(result);
+    }
+
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
+    @GetMapping("getFoodsByCategory")
+    public ResponseEntity<List<GetFoodResponse>> getFoodsByCategory(@RequestParam("category") FoodCategory category) {
+        var result = foodService.getFoodsByCategory(category);
 
         return ResponseEntity.ok(result);
     }

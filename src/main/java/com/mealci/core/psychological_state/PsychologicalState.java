@@ -8,7 +8,8 @@ public enum PsychologicalState {
     BAD(2),
     OK(3),
     GOOD(4),
-    VERY_GOOD(5);
+    VERY_GOOD(5),
+    UNKNOWN(6);
 
     private final int value;
 

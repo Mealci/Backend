@@ -9,7 +9,8 @@ public enum PhysicalDolor {
     OK(3),
     LOW(4),
     VERY_LOW(5),
-    NOTHING(6);
+    NOTHING(6),
+    UNKNOWN(7);
 
     private final int value;
 
