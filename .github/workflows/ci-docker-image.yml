@@ -1,9 +1,9 @@
 name: CI- Docker Image
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - hotfix/useDockerProfile
 
 permissions:
   contents: read
