@@ -3,7 +3,7 @@ name: CI- Docker Image
 on:
   pull_request:
     branches:
-      - hotfix/useDockerProfile
+      - '**'
 
 permissions:
   contents: read
