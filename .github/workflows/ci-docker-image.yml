@@ -33,6 +33,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Attendre que PostgreSQL soit prêt
+        run: |
+          echo "Attente de PostgreSQL..."
+          for i in {1..30}; do
+            if pg_isready -h localhost -p 5432 -U postgres; then
+              echo "PostgreSQL est prêt !"
+              break
+            fi
+            echo "PostgreSQL n'est pas encore prêt, attente..."
+            sleep 2
+          done
+
       - name: Construction du projet avec Maven (Profil spécifique)
         run: mvn clean package -P staging
 
