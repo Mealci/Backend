@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Construction du projet avec Maven (Profil spécifique)
-        run: mvn clean package -P docker
+        run: mvn clean package -P staging
 
       - name: Set repository name in lowercase
         id: repo_name
