@@ -7,26 +7,21 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Date;
 import java.util.function.Function;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-
     public static final String EMAIL = "email";
     public static final String ROLE = "role";
 
     @Value("${jwt.secret}")
     private String secretKey;
 
-    private final HttpServletRequest request;
-
     private static final long EXPIRATION_TIME = 3600000;
-
-    public JwtServiceImpl(HttpServletRequest request) {
-        this.request = request;
-    }
 
     @Override
     public String generateToken(User user) {
@@ -93,6 +88,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     public String getToken() {
-        return (String) request.getAttribute("jwt");
+        var attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+            return (String) attributes.getRequest().getAttribute("jwt");
+        }
+
+        return null;
     }
 }
