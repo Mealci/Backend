@@ -109,6 +109,18 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
         return result;
     }
 
+    @Override
+    public Food deleteFood(int id) {
+        var food = foodRepository.findById((long) id);
+        if (food.isEmpty()) {
+            throw new NotFoundException("food not found");
+        }
+
+        foodRepository.delete(food.get());
+
+        return FoodProfile.toDomain(food.get());
+    }
+
     private FoodEntity setUser(Food food, String email) {
         var user = customUserRepository.getByEmail(email);
         var foodEntity = FoodProfile.toEntity(food);
