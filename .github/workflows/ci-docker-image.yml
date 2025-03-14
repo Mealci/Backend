@@ -1,9 +1,9 @@
 name: CI- Docker Image
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - '**'
 
 permissions:
   contents: read
@@ -12,20 +12,18 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: Mealci
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-
     steps:
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Construction du projet avec Maven (Profil spécifique)
+        run: mvn clean package -P staging
 
       - name: Set repository name in lowercase
         id: repo_name
