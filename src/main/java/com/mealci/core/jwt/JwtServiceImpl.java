@@ -13,14 +13,13 @@ import java.util.function.Function;
 
 @Service
 public class JwtServiceImpl implements JwtService {
+    private final HttpServletRequest request;
 
     public static final String EMAIL = "email";
     public static final String ROLE = "role";
 
     @Value("${jwt.secret}")
     private String secretKey;
-
-    private final HttpServletRequest request;
 
     private static final long EXPIRATION_TIME = 3600000;
 
