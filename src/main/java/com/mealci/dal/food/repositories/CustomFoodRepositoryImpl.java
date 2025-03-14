@@ -121,6 +121,17 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
         return FoodProfile.toDomain(food.get());
     }
 
+    @Override
+    public void patchFoodQuantity(int id, double quantity) {
+        var food = foodRepository.findById((long) id);
+        if (food.isEmpty()) {
+            throw new NotFoundException("food not found");
+        }
+
+        food.get().setQuantity(quantity);
+        foodRepository.save(food.get());
+    }
+
     private FoodEntity setUser(Food food, String email) {
         var user = customUserRepository.getByEmail(email);
         var foodEntity = FoodProfile.toEntity(food);

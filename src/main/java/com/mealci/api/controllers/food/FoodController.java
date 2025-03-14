@@ -6,8 +6,8 @@ import com.mealci.core.food.Food;
 import com.mealci.core.food.FoodService;
 import com.mealci.core.food.create.CreateFoodRequest;
 import com.mealci.core.food.delete.DeleteFoodCommand;
-import com.mealci.core.food.delete.DeleteFoodResponse;
 import com.mealci.core.food.get_foods.GetFoodResponse;
+import com.mealci.core.food.patch_quantity.PatchFoodQuantityCommand;
 import com.mealci.core.food_category.FoodCategory;
 import com.mealci.core.food_state.FoodState;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -50,6 +50,15 @@ public class FoodController {
         var result = foodService.patchFoodState(id, state);
 
         return ResponseEntity.ok(result);
+    }
+
+    @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)
+    @PatchMapping("quantity/{id}/{quantity}")
+    public ResponseEntity<Void> patchQuantity(@PathVariable("id") int id,
+                                               @PathVariable("quantity") double quantity) {
+        new PatchFoodQuantityCommand(id, quantity).execute(pipeline);
+
+        return ResponseEntity.ok().build();
     }
 
     @SecurityRequirement(name = OpenApiConfiguration.BEARER_AUTH)

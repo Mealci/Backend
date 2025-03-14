@@ -16,4 +16,5 @@ public interface CustomFoodRepository {
     List<Food> getFoodsBetween(Instant from, Instant to);
     List<GetFoodResponse> getFoodsByCategory(FoodCategory category, User user);
     Food deleteFood(int id);
+    void patchFoodQuantity(int id, double quantity);
 }
