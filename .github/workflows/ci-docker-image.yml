@@ -21,21 +21,7 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          for i in {1..30}; do
-            if PGPASSWORD=postgres psql -h localhost -U postgres -d Mealci -c 'SELECT 1' &> /dev/null; then
-              echo "PostgreSQL is ready!"
-              exit 0
-            fi
-            echo "Waiting for PostgreSQL..."
-            sleep 2
-          done
-          echo "PostgreSQL did not become ready in time" >&2
-          exit 1
-
-
+        
       - name: Construction du projet avec Maven (Profil spécifique)
         run: mvn clean package -P staging
 
