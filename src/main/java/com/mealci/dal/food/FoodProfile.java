@@ -23,7 +23,8 @@ public class FoodProfile {
                 food.quantity,
                 food.measure.getValue(),
                 food.brand,
-                food.state.getValue());
+                food.state.getValue(),
+                food.barcode);
     }
 
     public static Food toDomain(FoodEntity entity) {
@@ -37,7 +38,8 @@ public class FoodProfile {
                 entity.getQuantity(),
                 Measure.fromValue(entity.getMeasure()),
                 entity.getBrand(),
-                FoodState.fromValue(entity.getState()));
+                FoodState.fromValue(entity.getState()),
+                entity.getBarcode());
     }
 
     public static List<Food> toDomain(List<FoodEntity> entities) {
