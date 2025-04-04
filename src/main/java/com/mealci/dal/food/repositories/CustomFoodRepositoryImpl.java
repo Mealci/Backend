@@ -82,7 +82,8 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
                             food.getQuantity(),
                             Measure.fromValue(food.getMeasure()),
                             food.getBrand(),
-                            FoodState.fromValue(food.getState())));
+                            FoodState.fromValue(food.getState()),
+                            food.getBarcode()));
             foods.add(foodResponse);
         }
 

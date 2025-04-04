@@ -31,7 +31,8 @@ public class FoodServiceImpl implements FoodService {
                 request.quantity(),
                 request.measure(),
                 request.brand(),
-                request.state());
+                request.state(),
+                request.barcode());
 
         var email = user.email.address;
 
@@ -49,7 +50,8 @@ public class FoodServiceImpl implements FoodService {
                     food.quantity(),
                     food.measure(),
                     food.brand(),
-                    food.state());
+                    food.state(),
+                    food.barcode());
 
             foods.add(entity);
         }

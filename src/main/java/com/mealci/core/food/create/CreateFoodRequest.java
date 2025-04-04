@@ -9,4 +9,5 @@ public record CreateFoodRequest(String name,
                                 double quantity,
                                 Measure measure,
                                 String brand,
-                                FoodState state) { }
+                                FoodState state,
+                                String barcode) { }
