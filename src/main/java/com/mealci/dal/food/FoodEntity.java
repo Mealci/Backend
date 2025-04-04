@@ -4,6 +4,7 @@ import com.mealci.dal.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import java.time.Instant;
 
@@ -23,6 +24,8 @@ public class FoodEntity {
     private int state;
     private Instant createAt;
     private String barcode;
+    private int nutriScore;
+    private int novaGroupScore;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     public UserEntity user;
@@ -33,7 +36,9 @@ public class FoodEntity {
                       int measure,
                       String brand,
                       int state,
-                      String barcode) {
+                      String barcode,
+                      int nutriScore,
+                      int novaGroupScore) {
         this.name = name;
         this.category = category;
         this.quantity = quantity;
@@ -42,6 +47,8 @@ public class FoodEntity {
         this.state = state;
         this.createAt = Instant.now();
         this.barcode = barcode;
+        this.nutriScore = nutriScore;
+        this.novaGroupScore = novaGroupScore;
     }
 
     public FoodEntity() {}
