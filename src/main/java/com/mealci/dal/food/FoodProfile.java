@@ -2,6 +2,8 @@ package com.mealci.dal.food;
 
 import com.mealci.core.food.Food;
 import com.mealci.core.food_category.FoodCategory;
+import com.mealci.core.food_score.NovaGroupScore;
+import com.mealci.core.food_score.NutriScore;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 
@@ -24,7 +26,9 @@ public class FoodProfile {
                 food.measure.getValue(),
                 food.brand,
                 food.state.getValue(),
-                food.barcode);
+                food.barcode,
+                food.nutriScore.getValue(),
+                food.novaGroupScore.getValue());
     }
 
     public static Food toDomain(FoodEntity entity) {
@@ -39,7 +43,9 @@ public class FoodProfile {
                 Measure.fromValue(entity.getMeasure()),
                 entity.getBrand(),
                 FoodState.fromValue(entity.getState()),
-                entity.getBarcode());
+                entity.getBarcode(),
+                NutriScore.fromValue(entity.getNutriScore()),
+                NovaGroupScore.fromValue(entity.getNovaGroupScore()));
     }
 
     public static List<Food> toDomain(List<FoodEntity> entities) {
