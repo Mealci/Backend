@@ -8,7 +8,6 @@ import com.mealci.core.food_score.NutriScore;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 import lombok.Getter;
-import org.springframework.lang.Nullable;
 
 @Getter
 public class Food extends ValueObject {
@@ -19,9 +18,7 @@ public class Food extends ValueObject {
     public final String brand;
     public final FoodState state;
     public final String barcode;
-    @Nullable
     public final NutriScore nutriScore;
-    @Nullable
     public final NovaGroupScore novaGroupScore;
 
     private Food(String name,
@@ -31,8 +28,8 @@ public class Food extends ValueObject {
                  String brand,
                  FoodState state,
                  String barcode,
-                 @Nullable NutriScore nutriScore,
-                 @Nullable NovaGroupScore novaGroupScore) {
+                 NutriScore nutriScore,
+                 NovaGroupScore novaGroupScore) {
         this.nutriScore = nutriScore;
         this.novaGroupScore = novaGroupScore;
         isBarcodeValid(barcode);

@@ -4,7 +4,6 @@ import com.mealci.dal.users.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import java.time.Instant;
 
@@ -24,7 +23,9 @@ public class FoodEntity {
     private int state;
     private Instant createAt;
     private String barcode;
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
     private int nutriScore;
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
     private int novaGroupScore;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

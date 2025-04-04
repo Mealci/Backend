@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum NutriScore {
+    NULL(0),
     A(1),
     B(2),
     C(3),

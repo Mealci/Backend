@@ -1,6 +1,8 @@
 package com.mealci.core.food.create;
 
 import com.mealci.core.food_category.FoodCategory;
+import com.mealci.core.food_score.NovaGroupScore;
+import com.mealci.core.food_score.NutriScore;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 
@@ -10,4 +12,6 @@ public record CreateFoodRequest(String name,
                                 Measure measure,
                                 String brand,
                                 FoodState state,
-                                String barcode) { }
+                                String barcode,
+                                NovaGroupScore novaGroupScore,
+                                NutriScore nutriScore) { }
