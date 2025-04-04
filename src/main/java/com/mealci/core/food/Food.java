@@ -3,6 +3,8 @@ package com.mealci.core.food;
 import com.mealci.core.base.ValueObject;
 import com.mealci.core.exceptions.UnprocessableEntityException;
 import com.mealci.core.food_category.FoodCategory;
+import com.mealci.core.food_score.NovaGroupScore;
+import com.mealci.core.food_score.NutriScore;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 import lombok.Getter;
@@ -16,6 +18,8 @@ public class Food extends ValueObject {
     public final String brand;
     public final FoodState state;
     public final String barcode;
+    public final NutriScore nutriScore;
+    public final NovaGroupScore novaGroupScore;
 
     private Food(String name,
                  FoodCategory category,
@@ -23,9 +27,13 @@ public class Food extends ValueObject {
                  Measure measure,
                  String brand,
                  FoodState state,
-                 String barcode) {
+                 String barcode,
+                 NutriScore nutriScore,
+                 NovaGroupScore novaGroupScore) {
+        this.nutriScore = nutriScore;
+        this.novaGroupScore = novaGroupScore;
         isBarcodeValid(barcode);
-        
+
         this.name = name;
         this.category = category;
         this.quantity = quantity;
@@ -41,8 +49,10 @@ public class Food extends ValueObject {
                               Measure measure,
                               String brand,
                               FoodState state,
-                              String barcode) {
-        return new Food(name,category,quantity,measure,brand, state, barcode);
+                              String barcode,
+                              NutriScore nutriScore,
+                              NovaGroupScore novaGroupScore) {
+        return new Food(name,category,quantity,measure,brand, state, barcode, nutriScore, novaGroupScore);
     }
 
     @Override

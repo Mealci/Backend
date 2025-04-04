@@ -32,7 +32,9 @@ public class FoodServiceImpl implements FoodService {
                 request.measure(),
                 request.brand(),
                 request.state(),
-                request.barcode());
+                request.barcode(),
+                request.nutriScore(),
+                request.novaGroupScore());
 
         var email = user.email.address;
 
@@ -51,7 +53,9 @@ public class FoodServiceImpl implements FoodService {
                     food.measure(),
                     food.brand(),
                     food.state(),
-                    food.barcode());
+                    food.barcode(),
+                    food.nutriScore(),
+                    food.novaGroupScore());
 
             foods.add(entity);
         }

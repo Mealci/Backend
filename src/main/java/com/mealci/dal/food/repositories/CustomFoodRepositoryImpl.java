@@ -4,6 +4,8 @@ import com.mealci.core.exceptions.NotFoundException;
 import com.mealci.core.food.Food;
 import com.mealci.core.food.get_foods.GetFoodResponse;
 import com.mealci.core.food_category.FoodCategory;
+import com.mealci.core.food_score.NovaGroupScore;
+import com.mealci.core.food_score.NutriScore;
 import com.mealci.core.food_state.FoodState;
 import com.mealci.core.measure.Measure;
 import com.mealci.core.users.User;
@@ -83,7 +85,9 @@ public class CustomFoodRepositoryImpl implements CustomFoodRepository {
                             Measure.fromValue(food.getMeasure()),
                             food.getBrand(),
                             FoodState.fromValue(food.getState()),
-                            food.getBarcode()));
+                            food.getBarcode(),
+                            NutriScore.fromValue(food.getNutriScore()),
+                            NovaGroupScore.fromValue(food.getNovaGroupScore())));
             foods.add(foodResponse);
         }
 
