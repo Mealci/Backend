@@ -21,7 +21,7 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    private static final long EXPIRATION_TIME = 3600000;
+    private static final long EXPIRATION_TIME = 604800000;
 
     public JwtServiceImpl(HttpServletRequest request) {
         this.request = request;
